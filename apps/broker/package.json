@@ -10,6 +10,7 @@
     "start": "node dist/index.js"
   },
   "keywords": [],
+  "private": true,
   "author": "",
   "license": "ISC",
   "dependencies": {
