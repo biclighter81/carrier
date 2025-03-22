@@ -1,0 +1,25 @@
+{
+  "name": "wms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "nodemon --watch ../../packages/types/dist --watch ../../packages/instrumentation/dist --watch . --exec ts-node index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^9.6.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "instrumentation": "workspace:*",
+    "types": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "nodemon": "^3.1.9",
+    "typescript": "^5.8.2"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "broker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "nodemon --watch ../../packages/types/dist --watch ../../packages/instrumentation/dist --watch . --exec ts-node index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "bullmq": "^5.44.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "instrumentation": "workspace:*",
+    "nodemon": "^3.1.9",
+    "types": "workspace:*",
+    "typescript": "^5.8.2"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.5",
+    "@types/express": "^5.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}

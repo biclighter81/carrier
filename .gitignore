@@ -1,0 +1,30 @@
+# Node modules überall im Projekt ignorieren
+node_modules/
+
+# .env-Dateien überall ignorieren
+.env
+**/.env
+
+# Editor & System-Dateien
+.DS_Store
+.vscode/
+
+# Build-Outputs
+dist/
+**/dist/
+coverage/
+**/coverage/
+
+# Logs
+*.log
+
+# Archivdateien
+*.tgz
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+
+# Weitere mögliche generierte Dateien
+*.tsbuildinfo

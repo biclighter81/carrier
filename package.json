@@ -1,0 +1,50 @@
+{
+  "name": "observability-prototype",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm run -r --parallel dev ",
+    "build": "pnpm run -r --parallel build"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^10.0.6",
+    "@semantic-release/npm": "^12.0.1",
+    "@semantic-release/release-notes-generator": "^14.0.1",
+    "semantic-release": "^24.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/changelog",
+      "@semantic-release/git",
+      "@semantic-release/github",
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "chmod +x git-build.sh",
+          "publishCmd": "./git-build.sh ${nextRelease.version} ${branch.name}"
+        }
+      ]
+    ],
+    "branches": [
+      "master",
+      "main",
+      {
+        "name": "preview",
+        "prerelease": true
+      }
+    ]
+  }
+}
