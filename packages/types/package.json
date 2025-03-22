@@ -9,6 +9,7 @@
     "build:pkg": "tsc -p tsconfig.json",
     "dev": "tsc -p tsconfig.json --watch"
   },
+  "private": true,
   "dependencies": {},
   "devDependencies": {
     "typescript": "^5.8.2"
