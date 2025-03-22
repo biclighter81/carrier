@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm run -r --parallel dev ",
-    "build": "pnpm run -r --parallel build"
+    "build": "pnpm run -r --parallel build",
+    "release": "npx --no-install semantic-release"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
