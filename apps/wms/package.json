@@ -7,6 +7,7 @@
     "build": "tsc -p tsconfig.json",
     "dev": "nodemon --watch ../../packages/types/dist --watch ../../packages/instrumentation/dist --watch . --exec ts-node index.ts"
   },
+  "private": true,
   "keywords": [],
   "author": "",
   "license": "ISC",
