@@ -24,3 +24,4 @@ wms:
     requests:
       cpu: '100m'
       memory: '128Mi'
+imagePullSecret: 'biclighter81-ghcr'

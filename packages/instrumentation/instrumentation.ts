@@ -20,7 +20,6 @@ import {
   SimpleLogRecordProcessor,
   LoggerProvider,
 } from '@opentelemetry/sdk-logs';
-
 // Initialize OpenTelemetry SDK
 const sdk = new NodeSDK({
   resource: resourceFromAttributes({
@@ -64,7 +63,9 @@ registerInstrumentations({
 const logger = winston.createLogger({
   transports: [new winston.transports.Console()],
 });
-
+logger.info(
+  'Logger initialized. Sending telemetry to ' + process.env.OTEL_COLLECTOR_URL
+);
 // Create meter
 const meter = metrics.getMeter(process.env.SERVICE_NAME || 'unknown-service');
 
