@@ -176,6 +176,9 @@ importers:
       '@opentelemetry/winston-transport':
         specifier: ^0.11.0
         version: 0.11.0
+      bullmq-otel:
+        specifier: ^1.0.1
+        version: 1.0.1
       winston:
         specifier: ^3.17.0
         version: 3.17.0
@@ -1172,6 +1175,9 @@ packages:
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
+
+  bullmq-otel@1.0.1:
+    resolution: {integrity: sha512-9SSBA/iq8bFUJ9I5bDwv1UmtbJAmIGHt796g5lsYZWasqouTqkFA3+Z/n17mCc8VzfxxygCCCBsXdC1mICbxdw==}
 
   bullmq@5.44.0:
     resolution: {integrity: sha512-OnEtkuXyrUx2Jm5BpH92+ttrobblBdCbkhOe3OoR0hxZuAilI3mPWlwELslhfImRpDv8rK+C/0/VK7I8f3xIig==}
@@ -4208,6 +4214,13 @@ snapshots:
   braces@3.0.3:
     dependencies:
       fill-range: 7.1.1
+
+  bullmq-otel@1.0.1:
+    dependencies:
+      '@opentelemetry/api': 1.9.0
+      bullmq: 5.44.0
+    transitivePeerDependencies:
+      - supports-color
 
   bullmq@5.44.0:
     dependencies:

@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import { logger, meter } from 'instrumentation';
+import { BullMQOtel, logger, meter } from 'instrumentation';
 import { Worker } from 'bullmq';
 import IORedis from 'ioredis';
 import { CarrierCode, Shipment } from 'types';
@@ -32,6 +32,7 @@ const worker = new Worker<Shipment>(
   {
     connection: redis,
     concurrency: 5,
+    telemetry: new BullMQOtel(process.env.SERVICE_NAME!),
   }
 );
 logger.info('📦 DHL worker started!');

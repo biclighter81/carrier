@@ -1,7 +1,7 @@
 //create bullmq queues for carrier queues
 import { Job, Queue, QueueEvents, Worker } from 'bullmq';
 import { Shipment } from 'types';
-import { logger } from 'instrumentation';
+import { logger, BullMQOtel } from 'instrumentation';
 
 //build a queue for every entry in the carrier code enum
 import { CarrierCode } from 'types';
@@ -46,6 +46,7 @@ const carrierQueues = Object.values(CarrierCode).reduce(
         host: process.env.REDIS_HOST,
         port: Number(process.env.REDIS_PORT),
       },
+      telemetry: new BullMQOtel(process.env.SERVICE_NAME!),
     });
     const queueEvents = new QueueEvents(`${cur}`, {
       connection: {

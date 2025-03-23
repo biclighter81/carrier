@@ -20,6 +20,7 @@ import { logs } from '@opentelemetry/api-logs';
 import { OpenTelemetryTransportV3 } from '@opentelemetry/winston-transport';
 import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-proto';
 import { BullMQInstrumentation } from '@appsignal/opentelemetry-instrumentation-bullmq';
+import { BullMQOtel } from 'bullmq-otel';
 // Initialize OpenTelemetry SDK
 const sdk = new NodeSDK({
   resource: resourceFromAttributes({
@@ -65,4 +66,4 @@ logger.info(
 // Create meter
 const meter = metrics.getMeter(process.env.SERVICE_NAME || 'unknown-service');
 
-export { logger, metrics, meter, sdk };
+export { logger, metrics, meter, sdk, BullMQOtel };
