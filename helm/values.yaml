@@ -25,3 +25,11 @@ wms:
       cpu: '100m'
       memory: '128Mi'
 imagePullSecret: 'biclighter81-ghcr'
+redis:
+  enabled: true
+  master:
+    persistence:
+      size: 2Gi
+  architecture: standalone
+  auth:
+    enabled: false

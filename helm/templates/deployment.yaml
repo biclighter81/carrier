@@ -34,6 +34,10 @@ spec:
               value: "carrier"
             - name: OTEL_COLLECTOR_URL
               value: "http://otel-opentelemetry-collector:4318"
+            - name: REDIS_HOST
+              value: "carrier-redis-master"
+            - name: REDIS_PORT
+              value: "6379"
           resources:
             limits:
               cpu: {{ .Values.broker.resources.limits.cpu }}
