@@ -13,9 +13,6 @@ import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
 import { OTLPMetricExporter } from '@opentelemetry/exporter-metrics-otlp-proto';
 import { PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
 import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-proto';
-import { WinstonInstrumentation } from '@opentelemetry/instrumentation-winston';
-import * as logsAPI from '@opentelemetry/api-logs';
-import * as winston from 'winston';
 import {
   SimpleLogRecordProcessor,
   LoggerProvider,
@@ -47,6 +44,10 @@ const sdk = new NodeSDK({
 
 sdk.start();
 
+import { WinstonInstrumentation } from '@opentelemetry/instrumentation-winston';
+import * as logsAPI from '@opentelemetry/api-logs';
+import * as winston from 'winston';
+
 // Create and register logger provider
 const loggerProvider = new LoggerProvider();
 loggerProvider.addLogRecordProcessor(
@@ -58,7 +59,7 @@ loggerProvider.addLogRecordProcessor(
 );
 logsAPI.logs.setGlobalLoggerProvider(loggerProvider);
 registerInstrumentations({
-  instrumentations: [new WinstonInstrumentation()],
+  instrumentations: [new WinstonInstrumentation({})],
 });
 const logger = winston.createLogger({
   transports: [new winston.transports.Console()],
