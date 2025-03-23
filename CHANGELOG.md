@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/biclighter81/carrier/compare/v1.1.1...v1.1.2) (2025-03-23)
+
+
+### Bug Fixes
+
+* **instrumentation:** fixes import order ([7fbc453](https://github.com/biclighter81/carrier/commit/7fbc45324af02d179f9e563f60d75daf0ceeb7c1))
+
 ## [1.1.1](https://github.com/biclighter81/carrier/compare/v1.1.0...v1.1.1) (2025-03-23)
 
 
