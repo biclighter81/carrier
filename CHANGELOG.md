@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/biclighter81/carrier/compare/v1.5.1...v1.5.2) (2025-03-23)
+
+
+### Bug Fixes
+
+* **broker:** adds job delay for better log visibility ([fa3ea05](https://github.com/biclighter81/carrier/commit/fa3ea051c8ff1de6c0225518bf1a9cbc05bf3c1d))
+
 ## [1.5.1](https://github.com/biclighter81/carrier/compare/v1.5.0...v1.5.1) (2025-03-23)
 
 
