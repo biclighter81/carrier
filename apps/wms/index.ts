@@ -16,30 +16,38 @@ app.post('/shipment/dispatch', async (req, res) => {
   logger.info('Dispatching shipment to carrier tool');
   // Simulate dispatching shipment to the carrier tool
   const shipment = generateMockShipment();
-  const r = await fetch(`${process.env.CARRIER_BROKER_URL}/shipment`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(shipment),
-  });
-  if (r.ok) {
-    logger.info('Shipment dispatched successfully', shipment);
-    res.status(200).json({ message: 'Shipment dispatched successfully' });
-  } else {
-    const errorText = await r.text();
-    logger.error(
-      'Failed to dispatch shipment',
-      { shipment },
-      { errorText },
-      { status: r.status }
-    );
+  try {
+    const r = await fetch(`${process.env.CARRIER_BROKER_URL}/shipment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(shipment),
+    });
+    if (r.ok) {
+      logger.info('Shipment dispatched successfully', shipment);
+      res.status(200).json({ message: 'Shipment dispatched successfully' });
+    } else {
+      const errorText = await r.text();
+      logger.error(
+        'Failed to dispatch shipment',
+        { shipment },
+        { errorText },
+        { status: r.status }
+      );
 
+      res.status(500).json({
+        message: 'Failed to dispatch shipment',
+        shipment,
+        errorText: errorText,
+        errorCode: r.status,
+      });
+    }
+  } catch (error) {
+    logger.error('Broker not reachable', { shipment }, { error });
     res.status(500).json({
-      message: 'Failed to dispatch shipment',
+      message: 'Broker not reachable',
       shipment,
-      errorText: errorText,
-      errorCode: r.status,
     });
   }
 });

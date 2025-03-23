@@ -1,18 +1,27 @@
 import { faker } from '@faker-js/faker';
-import {
-  Shipment,
-  Parcel,
-  Address,
-  CarrierCode,
-  ServiceLevel,
-  Weight,
-  Dimensions,
-} from 'types';
+import { Shipment, Parcel, Address } from 'types';
 import { pickWeightedRandom } from './utils/pickWeightedRandom';
 import {
   carrierDistribution,
   serviceLevelDistribution,
+  countryDistribution,
 } from './config/distributions';
+
+function getDistributedCountryCode(): string {
+  const selected = pickWeightedRandom(countryDistribution);
+  return selected === 'OTHER' ? faker.location.countryCode() : selected;
+}
+
+const makeAddress = (): Address => ({
+  name: faker.person.fullName(),
+  company: faker.company.name(),
+  street1: faker.location.streetAddress(),
+  postalCode: faker.location.zipCode(),
+  city: faker.location.city(),
+  country: getDistributedCountryCode(),
+  email: faker.internet.email(),
+  phone: faker.phone.number(),
+});
 
 export function generateMockShipment(): Shipment {
   const numParcels = faker.number.int({ min: 1, max: 3 });
@@ -35,17 +44,6 @@ export function generateMockShipment(): Shipment {
       currency: 'EUR',
     },
   }));
-
-  const makeAddress = (): Address => ({
-    name: faker.person.fullName(),
-    company: faker.company.name(),
-    street1: faker.location.streetAddress(),
-    postalCode: faker.location.zipCode(),
-    city: faker.location.city(),
-    country: faker.location.countryCode(),
-    email: faker.internet.email(),
-    phone: faker.phone.number(),
-  });
 
   return {
     shipmentId: faker.string.uuid(),
