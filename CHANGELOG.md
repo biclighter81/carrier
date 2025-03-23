@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/biclighter81/carrier/compare/v1.1.0...v1.1.1) (2025-03-23)
+
+
+### Bug Fixes
+
+* **k8s:** fixes deployment and adds otel info message ([ea3973a](https://github.com/biclighter81/carrier/commit/ea3973ad3f6eeb2dc575cbf8e2676fab3d94c4e7))
+
 # [1.1.0](https://github.com/biclighter81/carrier/compare/v1.0.0...v1.1.0) (2025-03-23)
 
 
