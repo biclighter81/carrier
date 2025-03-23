@@ -1,3 +1,11 @@
+## [1.4.1](https://github.com/biclighter81/carrier/compare/v1.4.0...v1.4.1) (2025-03-23)
+
+
+### Bug Fixes
+
+* **workspace:** fixes lock file ([2592547](https://github.com/biclighter81/carrier/commit/25925472727b145b3889f55192ce77ecdf7c5aa1))
+* **workspace:** includes apps sub folders in pnpm workspace ([76125ed](https://github.com/biclighter81/carrier/commit/76125ed9d27f1df426e11adb9bcd688bb89d39b6))
+
 # [1.4.0](https://github.com/biclighter81/carrier/compare/v1.3.0...v1.4.0) (2025-03-23)
 
 
