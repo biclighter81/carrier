@@ -7,18 +7,18 @@ import {
 } from '@opentelemetry/semantic-conventions';
 import { resourceFromAttributes } from '@opentelemetry/resources';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
-import { registerInstrumentations } from '@opentelemetry/instrumentation';
 
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
 import { OTLPMetricExporter } from '@opentelemetry/exporter-metrics-otlp-proto';
 import { PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
-import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-proto';
 import {
   SimpleLogRecordProcessor,
   LoggerProvider,
 } from '@opentelemetry/sdk-logs';
 import * as winston from 'winston';
-import { WinstonInstrumentation } from '@opentelemetry/instrumentation-winston';
+import { logs } from '@opentelemetry/api-logs';
+import { OpenTelemetryTransportV3 } from '@opentelemetry/winston-transport';
+import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-proto';
 // Initialize OpenTelemetry SDK
 const sdk = new NodeSDK({
   resource: resourceFromAttributes({
@@ -41,16 +41,19 @@ const sdk = new NodeSDK({
       })
     ),
   ],
-  instrumentations: [
-    getNodeAutoInstrumentations(),
-    new WinstonInstrumentation(),
-  ],
+  instrumentations: [getNodeAutoInstrumentations()],
 });
 
 sdk.start();
-
+// To start a logger, you first need to initialize the Logger provider.
+const loggerProvider = new LoggerProvider();
+logs.setGlobalLoggerProvider(loggerProvider);
 const logger = winston.createLogger({
-  transports: [new winston.transports.Console()],
+  level: 'info',
+  transports: [
+    new OpenTelemetryTransportV3(),
+    new winston.transports.Console({ format: winston.format.simple() }),
+  ],
 });
 logger.info(
   'Logger initialized. Sending telemetry to ' + process.env.OTEL_COLLECTOR_URL

@@ -145,6 +145,9 @@ importers:
       '@opentelemetry/semantic-conventions':
         specifier: ^1.30.0
         version: 1.30.0
+      '@opentelemetry/winston-transport':
+        specifier: ^0.11.0
+        version: 0.11.0
       winston:
         specifier: ^3.17.0
         version: 3.17.0
@@ -819,6 +822,10 @@ packages:
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
+
+  '@opentelemetry/winston-transport@0.11.0':
+    resolution: {integrity: sha512-A7tku+4svJxYEtwMQaHLl9hEXNwpEf2tyUF1F9VYHK/rhhY5Wq/zUaSFW2iFBF1Wse5IxBang8C8k9ZTy41hwA==}
+    engines: {node: ^18.19.0 || >=20.6.0}
 
   '@pnpm/config.env-replace@1.1.0':
     resolution: {integrity: sha512-htyl8TWnKL7K/ESFa1oW2UB5lVDxuF5DpM7tBi6Hu2LNL3mWkIzNLG6N4zoCUP1lCKNxWy/3iu8mS8MvToGd6w==}
@@ -3746,6 +3753,11 @@ snapshots:
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/core': 2.0.0(@opentelemetry/api@1.9.0)
+
+  '@opentelemetry/winston-transport@0.11.0':
+    dependencies:
+      '@opentelemetry/api-logs': 0.200.0
+      winston-transport: 4.9.0
 
   '@pnpm/config.env-replace@1.1.0': {}
 
