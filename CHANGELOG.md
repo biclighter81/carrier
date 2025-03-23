@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/biclighter81/carrier/compare/v1.3.0...v1.4.0) (2025-03-23)
+
+
+### Bug Fixes
+
+* **workspace:** fixes lock file ([23a0033](https://github.com/biclighter81/carrier/commit/23a0033446e59a3c18eb50a716f70197a8b63bdd))
+
+
+### Features
+
+* **carrier:** adds internal carrier for dhl ([453de8f](https://github.com/biclighter81/carrier/commit/453de8fc67c00948c14f88c40056ae1ff726b751))
+
 # [1.3.0](https://github.com/biclighter81/carrier/compare/v1.2.1...v1.3.0) (2025-03-23)
 
 
