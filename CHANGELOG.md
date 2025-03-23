@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/biclighter81/carrier/compare/v1.1.4...v1.2.0) (2025-03-23)
+
+
+### Features
+
+* **telemetry:** adds shipment destination country counter ([7c78b86](https://github.com/biclighter81/carrier/commit/7c78b862fd5ece80e04d27800bf0b36c61de011a))
+
 ## [1.1.4](https://github.com/biclighter81/carrier/compare/v1.1.3...v1.1.4) (2025-03-23)
 
 
