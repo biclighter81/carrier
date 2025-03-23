@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/biclighter81/carrier/compare/v1.1.3...v1.1.4) (2025-03-23)
+
+
+### Bug Fixes
+
+* **instrumentation:** logs instrumentation ([4fa0f72](https://github.com/biclighter81/carrier/commit/4fa0f727bcdf265bbffc5e56408f0f595845d142))
+
 ## [1.1.3](https://github.com/biclighter81/carrier/compare/v1.1.2...v1.1.3) (2025-03-23)
 
 
