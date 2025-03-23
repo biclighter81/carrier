@@ -1,0 +1,82 @@
+#Kubernetes deployment file for the helm chart
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helm.fullname" . }}-broker
+  labels:
+    {{- include "helm.labels" . | nindent 4 }}
+    app.kubernetes.io/component: broker
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+spec:
+  replicas: {{ .Values.broker.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "helm.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    spec:
+      containers:
+        - name: broker
+          imagePullPolicy: Always
+          image: "{{ .Values.broker.image.repository }}:{{ .Values.broker.image.tag }}"
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: SERVICE_NAME
+              value: "broker"
+            - name: SERVICE_GROUP
+              value: "carrier"
+            - name: OTEL_COLLECTOR_URL
+              value: "http://otel-opentelemetry-collector:4318"
+          resources:
+            limits:
+              cpu: {{ .Values.broker.resources.limits.cpu }}
+              memory: {{ .Values.broker.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.broker.resources.requests.cpu }}
+              memory: {{ .Values.broker.resources.requests.memory }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helm.fullname" . }}-wms
+  labels:
+    {{- include "helm.labels" . | nindent 4 }}
+    app.kubernetes.io/component: wms
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+spec:
+  replicas: {{ .Values.wms.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "helm.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    spec:
+      containers:
+        - name: wms
+          imagePullPolicy: Always
+          image: "{{ .Values.wms.image.repository }}:{{ .Values.wms.image.tag }}"
+          ports:
+            - name: http
+              containerPort: 3100
+              protocol: TCP
+          env:
+            - name: SERVICE_NAME
+              value: "wms"
+            - name: SERVICE_GROUP
+              value: "carrier"
+            - name: OTEL_COLLECTOR_URL
+              value: "http://otel-opentelemetry-collector:4318"
+            - name: CARRIER_BROKER_URL
+              value: "http://{{ include "helm.fullname" . }}-broker:3000"
+          resources:
+            limits:
+              cpu: {{ .Values.wms.resources.limits.cpu }}
+              memory: {{ .Values.wms.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.wms.resources.requests.cpu }}
+              memory: {{ .Values.wms.resources.requests.memory }}
