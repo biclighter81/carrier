@@ -80,3 +80,14 @@ export interface Shipment {
   tags?: string[];
   status?: 'pending' | 'processing' | 'shipped' | 'error' | 'cancelled';
 }
+
+export interface ShipmentLabel {
+  labelUrl: string;
+  labelFormat: 'PDF' | 'ZPL' | 'PNG';
+  labelType: 'PDF' | 'ZPL' | 'PNG';
+  labelSize: string;
+  dpi: number;
+  zplCode?: string;
+  trackingNumber?: string;
+  trackingUrl?: string;
+}

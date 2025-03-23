@@ -133,6 +133,53 @@ spec:
               value: "http://{{ .Release.Name }}-broker:3000"
             - name: REDIS_URL
               value: "redis://carrier-redis-master:6379"
+            - name: CARRIER_EXTERNAL_URL
+              value: "http://{{ .Release.Name }}-external-dhl:3000"
+          resources:
+            limits:
+              cpu: {{ .Values.carriers.resources.limits.cpu }}
+              memory: {{ .Values.carriers.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.carriers.resources.requests.cpu }}
+              memory: {{ .Values.carriers.resources.requests.memory }}
+---
+#External Carrier Deployments
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-external-dhl
+  labels:
+    app.kubernetes.io/component: external-dhl
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.carriers.external.dhl.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: external-dhl
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: external-dhl
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}
+      containers:
+        - name: external-dhl
+          imagePullPolicy: Always
+          image: "{{ .Values.carriers.external.dhl.image.repository }}:{{ .Values.carriers.external.dhl.image.tag }}"
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: SERVICE_NAME
+              value: "carrier-external-dhl"
+            - name: SERVICE_GROUP
+              value: "carrier-external"
+            - name: OTEL_COLLECTOR_URL
+              value: "http://otel-opentelemetry-collector:4318"
           resources:
             limits:
               cpu: {{ .Values.carriers.resources.limits.cpu }}

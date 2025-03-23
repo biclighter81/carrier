@@ -18,3 +18,9 @@ curl -v \
 -H "Authorization: token ${GITHUB_TOKEN}" \
 https://api.github.com/repos/biclighter81/carrier/dispatches \
 -d "{ \"event_type\": \"build-carrier-internal-dhl\", \"client_payload\": {\"version\": \"$version\", \"branch\": \"$branch\"} }"
+
+curl -v \
+-H "Accept: application/vnd.github.everest-preview+json" \
+-H "Authorization: token ${GITHUB_TOKEN}" \
+https://api.github.com/repos/biclighter81/carrier/dispatches \
+-d "{ \"event_type\": \"build-carrier-external-dhl\", \"client_payload\": {\"version\": \"$version\", \"branch\": \"$branch\"} }"

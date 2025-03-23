@@ -47,20 +47,33 @@ worker.on('completed', (job) => {
 
 async function processDhlShipment(shipment: Shipment) {
   const dhlPayload = transformToDhlFormat(shipment);
-  //TODO: call mock carrier api for now return label
-  return {
-    zplCode: `
-        ^XA
-        ^FO50,50^ADN,36,20^FDHello World!^FS
-        ^XZ
-        `,
-    dpi: 300,
-    labelFormat: 'ZPL',
-    labelType: 'PDF',
-    labelSize: '4x6',
-  };
-}
+  try {
+    const res = await fetch(`${process.env.CARRIER_EXTERNAL_URL}/receive`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dhlPayload),
+    });
+    if (!res.ok) {
+      logger.error('Failed to process shipment', {
+        status: res.status,
+        statusText: res.statusText,
+        response: await res.text(),
+      });
+      throw new Error(`Failed to process shipment: ${res.statusText}`);
+    } else {
+      const label = await res.json();
 
+      return label;
+    }
+  } catch (error) {
+    logger.error('External DHL API not reachable', {
+      error,
+    });
+    throw new Error(`Error processing shipment: ${error}`);
+  }
+}
 function transformToDhlFormat(shipment: Shipment) {
   return {
     shipmentId: shipment.shipmentId,

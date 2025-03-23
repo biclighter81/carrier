@@ -34,3 +34,21 @@ spec:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/component: wms
 ---
+#external carrier
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-external-dhl
+  labels:
+    app.kubernetes.io/component: external-dhl
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: external-dhl
