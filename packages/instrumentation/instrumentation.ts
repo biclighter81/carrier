@@ -19,6 +19,7 @@ import * as winston from 'winston';
 import { logs } from '@opentelemetry/api-logs';
 import { OpenTelemetryTransportV3 } from '@opentelemetry/winston-transport';
 import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-proto';
+import { BullMQInstrumentation } from '@appsignal/opentelemetry-instrumentation-bullmq';
 // Initialize OpenTelemetry SDK
 const sdk = new NodeSDK({
   resource: resourceFromAttributes({
@@ -41,7 +42,10 @@ const sdk = new NodeSDK({
       })
     ),
   ],
-  instrumentations: [getNodeAutoInstrumentations()],
+  instrumentations: [
+    getNodeAutoInstrumentations(),
+    new BullMQInstrumentation(),
+  ],
 });
 
 sdk.start();

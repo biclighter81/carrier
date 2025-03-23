@@ -54,6 +54,8 @@ app.post('/shipment', async (req, res) => {
         type: 'exponential',
         delay: 1000,
       },
+      removeOnComplete: true,
+      removeOnFail: false,
     });
     logger.info('Shipment added to queue', {
       shipmentId: shipment.shipmentId,
@@ -72,5 +74,5 @@ app.post('/shipment', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  logger.info(`Broker is running on port ${PORT}`);
+  logger.info(`🐙 Broker is running on port ${PORT}`);
 });
