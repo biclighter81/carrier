@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/biclighter81/carrier/compare/v1.5.0...v1.5.1) (2025-03-23)
+
+
+### Bug Fixes
+
+* **carrier-dhl:** fixes error handling ([9149bbd](https://github.com/biclighter81/carrier/commit/9149bbd2985bba5e2ab4aff1821d10feb2ffa9b6))
+
 # [1.5.0](https://github.com/biclighter81/carrier/compare/v1.4.3...v1.5.0) (2025-03-23)
 
 
