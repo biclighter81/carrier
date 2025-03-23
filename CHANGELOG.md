@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/biclighter81/carrier/compare/v1.2.0...v1.2.1) (2025-03-23)
+
+
+### Bug Fixes
+
+* **wms:** fixed error handling for broker communication and adds european focused country distribution ([66f8309](https://github.com/biclighter81/carrier/commit/66f8309d8e9adbcbc181bea34af7a1b638fcc7a5))
+
 # [1.2.0](https://github.com/biclighter81/carrier/compare/v1.1.4...v1.2.0) (2025-03-23)
 
 
