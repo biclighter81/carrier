@@ -17,6 +17,8 @@ import {
   SimpleLogRecordProcessor,
   LoggerProvider,
 } from '@opentelemetry/sdk-logs';
+import * as winston from 'winston';
+import { WinstonInstrumentation } from '@opentelemetry/instrumentation-winston';
 // Initialize OpenTelemetry SDK
 const sdk = new NodeSDK({
   resource: resourceFromAttributes({
@@ -39,28 +41,14 @@ const sdk = new NodeSDK({
       })
     ),
   ],
-  instrumentations: [getNodeAutoInstrumentations()],
+  instrumentations: [
+    getNodeAutoInstrumentations(),
+    new WinstonInstrumentation(),
+  ],
 });
 
 sdk.start();
 
-import { WinstonInstrumentation } from '@opentelemetry/instrumentation-winston';
-import * as logsAPI from '@opentelemetry/api-logs';
-import * as winston from 'winston';
-
-// Create and register logger provider
-const loggerProvider = new LoggerProvider();
-loggerProvider.addLogRecordProcessor(
-  new SimpleLogRecordProcessor(
-    new OTLPLogExporter({
-      url: process.env.OTEL_COLLECTOR_URL + '/v1/logs',
-    })
-  )
-);
-logsAPI.logs.setGlobalLoggerProvider(loggerProvider);
-registerInstrumentations({
-  instrumentations: [new WinstonInstrumentation({})],
-});
 const logger = winston.createLogger({
   transports: [new winston.transports.Console()],
 });
