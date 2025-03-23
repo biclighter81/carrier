@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/biclighter81/carrier/compare/v1.4.3...v1.5.0) (2025-03-23)
+
+
+### Features
+
+* **carrier:** adds external dhl carrier ([eee71cd](https://github.com/biclighter81/carrier/commit/eee71cdbf7e0844cc9dbd856cb0f419a42ebe912))
+
 ## [1.4.3](https://github.com/biclighter81/carrier/compare/v1.4.2...v1.4.3) (2025-03-23)
 
 
