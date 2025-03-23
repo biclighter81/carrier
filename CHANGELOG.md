@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/biclighter81/carrier/compare/v1.4.2...v1.4.3) (2025-03-23)
+
+
+### Bug Fixes
+
+* **carrier:** adds bullmq otel trace module ([97f0db4](https://github.com/biclighter81/carrier/commit/97f0db46123f7ce97c80baa8e792eeaf6da517c5))
+
 ## [1.4.2](https://github.com/biclighter81/carrier/compare/v1.4.1...v1.4.2) (2025-03-23)
 
 
