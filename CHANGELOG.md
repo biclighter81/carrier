@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/biclighter81/carrier/compare/v1.2.1...v1.3.0) (2025-03-23)
+
+
+### Features
+
+* **broker:** implements carrier queues ([0b62e7a](https://github.com/biclighter81/carrier/commit/0b62e7aa146ddc7cbd0f095c1127639cbd373464))
+
 ## [1.2.1](https://github.com/biclighter81/carrier/compare/v1.2.0...v1.2.1) (2025-03-23)
 
 
