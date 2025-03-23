@@ -45,6 +45,13 @@ worker.on('completed', (job) => {
   console.log(`[DHL Worker] Job ${job.id} completed`);
 });
 
+class ShippmentError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'ShipmentError';
+  }
+}
+
 async function processDhlShipment(shipment: Shipment) {
   const dhlPayload = transformToDhlFormat(shipment);
   try {
@@ -61,13 +68,17 @@ async function processDhlShipment(shipment: Shipment) {
         statusText: res.statusText,
         response: await res.text(),
       });
-      throw new Error(`Failed to process shipment: ${res.statusText}`);
+      throw new ShippmentError(`Failed to process shipment: ${res.statusText}`);
     } else {
       const label = await res.json();
 
       return label;
     }
   } catch (error) {
+    if (error instanceof ShippmentError) {
+      throw error;
+    }
+    // Handle network errors or other unexpected errors
     logger.error('External DHL API not reachable', {
       error,
     });
