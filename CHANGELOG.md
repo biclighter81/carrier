@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/biclighter81/carrier/compare/v1.4.1...v1.4.2) (2025-03-23)
+
+
+### Bug Fixes
+
+* **carrier-dhl:** fixes ioredis max retries issue ([0ba30ed](https://github.com/biclighter81/carrier/commit/0ba30ed89e33843276ec4d98a6d3f9f4a57510bc))
+
 ## [1.4.1](https://github.com/biclighter81/carrier/compare/v1.4.0...v1.4.1) (2025-03-23)
 
 
