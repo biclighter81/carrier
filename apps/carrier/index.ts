@@ -18,10 +18,10 @@ const shipmentCounter = meter.createCounter('shipments_processed', {
   description: 'Counts the number of shipments processed',
 });
 const externalCarrierResponseTime = meter.createHistogram(
-  'external_carrier_response_time',
+  'external_carrier_api_duration_seconds',
   {
-    description: 'Records the response time of the external carrier API',
-    unit: 'ms',
+    description: 'Duration of external carrier API call in seconds',
+    unit: 's',
   }
 );
 
@@ -56,17 +56,16 @@ new Worker<Shipment>(
     }
 
     // 📊 Telemetrie
-    const startTime = Date.now();
+    const start = process.hrtime();
     const result = await processShipment(
       job.data,
       simulatePartialSuccess,
       simulateDelay
     );
-    const endTime = Date.now();
-    const responseTime = endTime - startTime;
-    externalCarrierResponseTime.record(responseTime, {
+    const [s, ns] = process.hrtime(start);
+    const duration = s + ns / 1e9;
+    externalCarrierResponseTime.record(duration, {
       carrierCode,
-      shipmentId: job.data.shipmentId,
     });
     logger.info(`${carrierCode} shipment processed`, {
       jobId: job.id,
