@@ -1,3 +1,10 @@
+## [1.8.9](https://github.com/biclighter81/carrier/compare/v1.8.8...v1.8.9) (2025-03-24)
+
+
+### Bug Fixes
+
+* **instrumentation:** improves logs messages ([8c1cb70](https://github.com/biclighter81/carrier/commit/8c1cb700ee0f69813a0ebedb537b2a415520605c))
+
 ## [1.8.8](https://github.com/biclighter81/carrier/compare/v1.8.7...v1.8.8) (2025-03-24)
 
 
