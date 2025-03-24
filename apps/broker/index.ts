@@ -78,7 +78,6 @@ app.post('/shipment', async (req, res) => {
   try {
     await queue.add('shipment', shipment, {
       attempts: 3,
-      delay: 1000,
       backoff: {
         type: 'exponential',
         delay: 1000,

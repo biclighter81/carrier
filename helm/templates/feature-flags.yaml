@@ -11,7 +11,7 @@ spec:
       # DHL
       simulate.carrier.dhl.delay:
         state: 'ENABLED'
-        defaultVariant: 'on'
+        defaultVariant: 'off'
         variants:
           'on': true
           'off': false
@@ -61,7 +61,7 @@ spec:
       # FedEx
       simulate.carrier.fedex.delay:
         state: 'ENABLED'
-        defaultVariant: 'on'
+        defaultVariant: 'off'
         variants:
           'on': true
           'off': false
