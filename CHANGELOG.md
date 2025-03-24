@@ -1,3 +1,10 @@
+## [1.8.11](https://github.com/biclighter81/carrier/compare/v1.8.10...v1.8.11) (2025-03-24)
+
+
+### Bug Fixes
+
+* **instrumentation:** moves simulation to external carrier for better service observability ([1c0398f](https://github.com/biclighter81/carrier/commit/1c0398f8f1e4654e3ff595df0996bacfeb412127))
+
 ## [1.8.10](https://github.com/biclighter81/carrier/compare/v1.8.9...v1.8.10) (2025-03-24)
 
 
