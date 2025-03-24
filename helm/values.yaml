@@ -38,7 +38,7 @@ carriers:
   external:
     replicas: 1
     image:
-      repository: ghcr.io/biclighter81/carrier-external-dhl
+      repository: ghcr.io/biclighter81/carrier-external
       tag: latest
 
 imagePullSecret: 'biclighter81-ghcr'

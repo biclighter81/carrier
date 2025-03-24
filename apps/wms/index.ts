@@ -64,7 +64,6 @@ app.post('/shipment/dispatch', async (req, res) => {
 
     const [s, ns] = process.hrtime(start);
     const responseTime = s * 1000 + ns / 1e6; // Convert to milliseconds
-    logger.info('Broker response time', { responseTime });
     brokerResponseTime.record(responseTime);
 
     if (r.ok) {
