@@ -1,3 +1,10 @@
+## [1.8.10](https://github.com/biclighter81/carrier/compare/v1.8.9...v1.8.10) (2025-03-24)
+
+
+### Bug Fixes
+
+* **instrumentation:** removes broker response time log ([6bfc983](https://github.com/biclighter81/carrier/commit/6bfc983b27dca56dcd843f2ddcc03b5ef6f4e8ce))
+
 ## [1.8.9](https://github.com/biclighter81/carrier/compare/v1.8.8...v1.8.9) (2025-03-24)
 
 
