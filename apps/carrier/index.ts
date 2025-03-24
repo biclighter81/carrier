@@ -60,7 +60,7 @@ new Worker<Shipment>(
       {
         description: 'Disribution of external carrier API response times',
         unit: 'ms',
-        valueType: ValueType.INT,
+        valueType: ValueType.DOUBLE,
       }
     );
     const start = process.hrtime();
