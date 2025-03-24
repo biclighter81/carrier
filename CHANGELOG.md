@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/biclighter81/carrier/compare/v1.6.1...v1.6.2) (2025-03-24)
+
+
+### Bug Fixes
+
+* **carrier:** moves from specific implementation to generic ([b29985e](https://github.com/biclighter81/carrier/commit/b29985ede255f4f916866e9ce96a48a7b3a364c4))
+
 ## [1.6.1](https://github.com/biclighter81/carrier/compare/v1.6.0...v1.6.1) (2025-03-24)
 
 
