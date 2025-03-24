@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/biclighter81/carrier/compare/v1.9.0...v1.9.1) (2025-03-24)
+
+
+### Bug Fixes
+
+* **instrumentation:** adds error message on job fail ([f2ca3b5](https://github.com/biclighter81/carrier/commit/f2ca3b5580329ef10e7040c34251702bab061cd6))
+
 # [1.9.0](https://github.com/biclighter81/carrier/compare/v1.8.11...v1.9.0) (2025-03-24)
 
 
