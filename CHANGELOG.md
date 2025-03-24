@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/biclighter81/carrier/compare/v1.7.1...v1.8.0) (2025-03-24)
+
+
+### Features
+
+* **instrumentation:** adds some repsonse time metrics ([4334c70](https://github.com/biclighter81/carrier/commit/4334c703ba1cabf8c9c851068c541e0542eeec62))
+
 ## [1.7.1](https://github.com/biclighter81/carrier/compare/v1.7.0...v1.7.1) (2025-03-24)
 
 
