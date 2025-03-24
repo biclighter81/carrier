@@ -1,3 +1,10 @@
+## [1.8.7](https://github.com/biclighter81/carrier/compare/v1.8.6...v1.8.7) (2025-03-24)
+
+
+### Bug Fixes
+
+* **instrumentation:** adds error log on simulate ([62b7615](https://github.com/biclighter81/carrier/commit/62b7615813e698f02fe21fcd62b6a69a6360a8d2))
+
 ## [1.8.6](https://github.com/biclighter81/carrier/compare/v1.8.5...v1.8.6) (2025-03-24)
 
 
