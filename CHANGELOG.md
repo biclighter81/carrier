@@ -1,3 +1,10 @@
+## [1.8.4](https://github.com/biclighter81/carrier/compare/v1.8.3...v1.8.4) (2025-03-24)
+
+
+### Bug Fixes
+
+* **instrumentation:** fixes millisecond conversion and broker meter ([cf01a2b](https://github.com/biclighter81/carrier/commit/cf01a2b4aadc626e7ed43bc38229358e9bbe1053))
+
 ## [1.8.3](https://github.com/biclighter81/carrier/compare/v1.8.2...v1.8.3) (2025-03-24)
 
 
