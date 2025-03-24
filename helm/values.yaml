@@ -33,11 +33,10 @@ carriers:
       cpu: '250m'
       memory: '256Mi'
   internal:
-    dhl:
-      replicas: 1
-      image:
-        repository: ghcr.io/biclighter81/carrier-internal-dhl
-        tag: latest
+    replicas: 1
+    image:
+      repository: ghcr.io/biclighter81/carrier-internal
+      tag: latest
   external:
     dhl:
       replicas: 1

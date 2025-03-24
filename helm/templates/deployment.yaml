@@ -105,7 +105,7 @@ metadata:
     app.kubernetes.io/component: internal-dhl
     app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
-  replicas: {{ .Values.carriers.internal.dhl.replicas }}
+  replicas: {{ .Values.carriers.internal.replicas }}
   selector:
     matchLabels:
       app.kubernetes.io/component: internal-dhl
@@ -121,7 +121,7 @@ spec:
       containers:
         - name: internal-dhl
           imagePullPolicy: Always
-          image: "{{ .Values.carriers.internal.dhl.image.repository }}:{{ .Values.carriers.internal.dhl.image.tag }}"
+          image: "{{ .Values.carriers.internal.image.repository }}:{{ .Values.carriers.internal.image.tag }}"
           ports:
             - name: http
               containerPort: 3000
@@ -129,6 +129,8 @@ spec:
           env:
             - name: SERVICE_NAME
               value: "carrier-internal-dhl"
+            - name: CARRIER_CODE
+              value: "DHL"
             - name: SERVICE_GROUP
               value: "carrier"
             - name: OTEL_COLLECTOR_URL

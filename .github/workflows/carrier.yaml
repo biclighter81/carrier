@@ -1,9 +1,9 @@
-name: carrier-internal-dhl
-run-name: Build Job for carrier-internal-dhl-${{github.event.client_payload.version}} on branch ${{github.event.client_payload.branch}}
+name: carrier-internal
+run-name: Build Job for carrier-internal-${{github.event.client_payload.version}} on branch ${{github.event.client_payload.branch}}
 on:
   repository_dispatch:
     types:
-      - 'build-carrier-internal-dhl'
+      - 'build-carrier-internal'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,7 +15,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/biclighter81/carrier-internal-dhl
+            ghcr.io/biclighter81/carrier-internal
           tags: |
             ${{github.event.client_payload.version}}
             ${{github.event.client_payload.branch}}.next
@@ -45,7 +45,7 @@ jobs:
         run: |
           pnpm install --frozen-lockfile
           pnpm run -r build:pkg
-          pnpm deploy --filter carrier-internal-dhl deploy
+          pnpm deploy --filter carrier-internal deploy
           cd deploy
           pnpm run build
       - name: Build + Push

@@ -3,12 +3,13 @@ dotenv.config();
 import { BullMQOtel, logger, meter, flagClient } from 'instrumentation';
 import { Worker } from 'bullmq';
 import IORedis from 'ioredis';
-import { CarrierCode, Shipment } from 'types';
+import { Shipment } from 'types';
 
 const redis = new IORedis(process.env.REDIS_URL || 'redis://localhost:6379', {
   maxRetriesPerRequest: null,
 });
-logger.info('Bootstrapping DHL worker...');
+const carrierCode = process.env.CARRIER_CODE!;
+logger.info(`Bootstrapping ${carrierCode} worker...`);
 setInterval(async () => {
   const flag = await flagClient.getStringValue('dhl-flag', 'default-value');
   logger.info('Feature flag value: ' + flag);
@@ -17,19 +18,19 @@ const shipmentCounter = meter.createCounter('shipments_processed', {
   description: 'Counts the number of shipments processed',
 });
 const worker = new Worker<Shipment>(
-  CarrierCode.DHL,
+  carrierCode,
   async (job) => {
-    logger.info('Processing DHL shipment', {
+    logger.info(`Processing ${carrierCode} shipment`, {
       jobId: job.id,
       shipment: job.data,
     });
-    const ret = await processDhlShipment(job.data);
-    logger.info('DHL shipment processed', {
+    const ret = await processShipment(job.data);
+    logger.info(`${carrierCode} shipment processed`, {
       jobId: job.id,
       shipment: job.data,
       ret,
     });
-    shipmentCounter.add(1, { carrierCode: CarrierCode.DHL });
+    shipmentCounter.add(1, { carrierCode: carrierCode });
     return ret;
   },
   {
@@ -38,15 +39,7 @@ const worker = new Worker<Shipment>(
     telemetry: new BullMQOtel(process.env.SERVICE_NAME!),
   }
 );
-logger.info('📦 DHL worker started!');
-
-worker.on('failed', (job, err) => {
-  console.error(`[DHL Worker] Job ${job?.id} failed:`, err.message);
-});
-
-worker.on('completed', (job) => {
-  console.log(`[DHL Worker] Job ${job.id} completed`);
-});
+logger.info(`📦 ${carrierCode} worker started!`);
 
 class ShippmentError extends Error {
   constructor(message: string) {
@@ -55,15 +48,15 @@ class ShippmentError extends Error {
   }
 }
 
-async function processDhlShipment(shipment: Shipment) {
-  const dhlPayload = transformToDhlFormat(shipment);
+async function processShipment(shipment: Shipment) {
+  const payload = transformToCarrierFormat(shipment);
   try {
     const res = await fetch(`${process.env.CARRIER_EXTERNAL_URL}/receive`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(dhlPayload),
+      body: JSON.stringify(payload),
     });
     if (!res.ok) {
       logger.error('Failed to process shipment', {
@@ -82,13 +75,13 @@ async function processDhlShipment(shipment: Shipment) {
       throw error;
     }
     // Handle network errors or other unexpected errors
-    logger.error('External DHL API not reachable', {
+    logger.error(`External ${carrierCode} API not reachable`, {
       error,
     });
     throw new Error(`Error processing shipment: ${error}`);
   }
 }
-function transformToDhlFormat(shipment: Shipment) {
+function transformToCarrierFormat(shipment: Shipment) {
   return {
     shipmentId: shipment.shipmentId,
     recipient: {
