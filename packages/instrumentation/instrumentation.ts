@@ -73,6 +73,7 @@ OpenFeature.setProvider(
   new FlagdProvider(
     {
       host: process.env.FLAGD_HOST || 'localhost',
+      cache: 'disabled',
     },
     logger
   )

@@ -38,11 +38,10 @@ carriers:
       repository: ghcr.io/biclighter81/carrier-internal
       tag: latest
   external:
-    dhl:
-      replicas: 1
-      image:
-        repository: ghcr.io/biclighter81/carrier-external-dhl
-        tag: latest
+    replicas: 1
+    image:
+      repository: ghcr.io/biclighter81/carrier-external-dhl
+      tag: latest
 
 imagePullSecret: 'biclighter81-ghcr'
 redis:

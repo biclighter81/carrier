@@ -10,9 +10,8 @@ spec:
     flags:
       dhl-flag:
         variants:
-          apa: apa
           sty: sty
-        defaultVariant: apa
+        defaultVariant: sty
         state: ENABLED
 ---
 # Feature flag source custom resource, configuring flagd to source flags from FeatureFlag CRDs
