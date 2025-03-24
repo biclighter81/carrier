@@ -1,0 +1,47 @@
+# Flags for our backend application
+apiVersion: core.openfeature.dev/v1beta1
+kind: FeatureFlag
+metadata:
+  name: carrier-flags
+  labels:
+    app: carrier-flags
+spec:
+  flagSpec:
+    flags:
+      dhl-flag:
+        variants:
+          apa: apa
+          sty: sty
+        defaultVariant: apa
+        state: ENABLED
+---
+# Feature flag source custom resource, configuring flagd to source flags from FeatureFlag CRDs
+apiVersion: core.openfeature.dev/v1beta1
+kind: FeatureFlagSource
+metadata:
+  name: carrier-flags
+  labels:
+    app: carrier-flags
+spec:
+  sources:
+    - source: carrier-flags
+      provider: kubernetes
+---
+# Standalone flagd for serving in-process provider
+apiVersion: core.openfeature.dev/v1beta1
+kind: Flagd
+metadata:
+  name: flagd-carrier
+spec:
+  replicas: 1
+  serviceType: ClusterIP
+  serviceAccountName: default
+  featureFlagSource: carrier-flags
+---
+# In-process provider configuration
+apiVersion: core.openfeature.dev/v1beta1
+kind: InProcessConfiguration
+metadata:
+  name: carrier-flags-config
+spec:
+  host: carrier-flags

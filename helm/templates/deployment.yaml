@@ -38,6 +38,8 @@ spec:
               value: "carrier-redis-master"
             - name: REDIS_PORT
               value: "6379"
+            - name: FLAGD_HOST
+              value: "flagd-carrier"
           resources:
             limits:
               cpu: {{ .Values.broker.resources.limits.cpu }}
@@ -84,6 +86,8 @@ spec:
               value: "http://otel-opentelemetry-collector:4318"
             - name: CARRIER_BROKER_URL
               value: "http://{{ .Release.Name }}-broker:3000"
+            - name: FLAGD_HOST
+              value: "flagd-carrier"
           resources:
             limits:
               cpu: {{ .Values.wms.resources.limits.cpu }}
@@ -135,6 +139,8 @@ spec:
               value: "redis://carrier-redis-master:6379"
             - name: CARRIER_EXTERNAL_URL
               value: "http://{{ .Release.Name }}-external-dhl:3000"
+            - name: FLAGD_HOST
+              value: "flagd-carrier"
           resources:
             limits:
               cpu: {{ .Values.carriers.resources.limits.cpu }}
@@ -180,6 +186,8 @@ spec:
               value: "carrier-external"
             - name: OTEL_COLLECTOR_URL
               value: "http://otel-opentelemetry-collector:4318"
+            - name: FLAGD_HOST
+              value: "flagd-carrier"
           resources:
             limits:
               cpu: {{ .Values.carriers.resources.limits.cpu }}

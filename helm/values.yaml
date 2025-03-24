@@ -54,3 +54,6 @@ redis:
   architecture: standalone
   auth:
     enabled: false
+
+open-feature-operator:
+  otelCollectorUri: 'http://otel-opentelemetry-collector:4318'

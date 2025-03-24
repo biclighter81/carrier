@@ -2,5 +2,8 @@ dependencies:
 - name: redis
   repository: https://charts.bitnami.com/bitnami
   version: 20.11.3
-digest: sha256:4014e67b8c2ffbcd225c2713d5134d1939945bcf5f799a4120ab16b8ec8af611
-generated: "2025-03-23T16:59:40.475008+01:00"
+- name: open-feature-operator
+  repository: https://open-feature.github.io/open-feature-operator/
+  version: v0.8.5
+digest: sha256:e93ee968d8f2e893d70a0b8841138f1734df99d41c11b97ec57e728f12e838d4
+generated: "2025-03-24T10:14:01.688342+01:00"

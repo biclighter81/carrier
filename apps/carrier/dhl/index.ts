@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import { BullMQOtel, logger, meter } from 'instrumentation';
+import { BullMQOtel, logger, meter, flagClient } from 'instrumentation';
 import { Worker } from 'bullmq';
 import IORedis from 'ioredis';
 import { CarrierCode, Shipment } from 'types';
@@ -9,7 +9,10 @@ const redis = new IORedis(process.env.REDIS_URL || 'redis://localhost:6379', {
   maxRetriesPerRequest: null,
 });
 logger.info('Bootstrapping DHL worker...');
-
+setInterval(async () => {
+  const flag = await flagClient.getStringValue('dhl-flag', 'default-value');
+  logger.info('Feature flag value:', { flag });
+}, 5000);
 const shipmentCounter = meter.createCounter('shipments_processed', {
   description: 'Counts the number of shipments processed',
 });

@@ -21,6 +21,8 @@ import { OpenTelemetryTransportV3 } from '@opentelemetry/winston-transport';
 import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-proto';
 import { BullMQInstrumentation } from '@appsignal/opentelemetry-instrumentation-bullmq';
 import { BullMQOtel } from 'bullmq-otel';
+import { OpenFeature } from '@openfeature/server-sdk';
+import { FlagdProvider } from '@openfeature/flagd-provider';
 // Initialize OpenTelemetry SDK
 const sdk = new NodeSDK({
   resource: resourceFromAttributes({
@@ -66,4 +68,15 @@ logger.info(
 // Create meter
 const meter = metrics.getMeter(process.env.SERVICE_NAME || 'unknown-service');
 
-export { logger, metrics, meter, sdk, BullMQOtel };
+// Create Feature Flag Provider
+OpenFeature.setProvider(
+  new FlagdProvider(
+    {
+      host: process.env.FLAGD_HOST || 'localhost',
+    },
+    logger
+  )
+);
+const flagClient = OpenFeature.getClient();
+
+export { logger, metrics, meter, sdk, BullMQOtel, flagClient };
