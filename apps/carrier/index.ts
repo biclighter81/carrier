@@ -60,7 +60,7 @@ new Worker<Shipment>(
       {
         description: 'Disribution of external carrier API response times',
         unit: 'ms',
-        valueType: ValueType.DOUBLE,
+        valueType: ValueType.INT,
       }
     );
     const start = process.hrtime();
@@ -70,7 +70,7 @@ new Worker<Shipment>(
       simulateDelay
     );
     const [s, ns] = process.hrtime(start);
-    const duration = s + ns / 1e9;
+    const duration = s + ns / 1e6; // convert to milliseconds
     externalCarrierResponseTime.record(duration, {
       carrierCode,
     });

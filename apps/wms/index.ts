@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
-import { logger, flagClient, meter } from 'instrumentation';
+import { logger, flagClient, meter, ValueType } from 'instrumentation';
 import { generateMockShipment } from './generateShipment';
 
 const app = express();
@@ -23,10 +23,6 @@ app.get('/shipment', async (req, res) => {
   res.json(shipment);
 });
 
-const brokerResponseTime = meter.createHistogram('wms_broker_response_time', {
-  description: 'Response time of carrier broker',
-  unit: 'ms',
-});
 app.post('/shipment/dispatch', async (req, res) => {
   logger.info('Dispatching shipment to carrier tool');
   const shipment = generateMockShipment();
@@ -53,18 +49,23 @@ app.post('/shipment/dispatch', async (req, res) => {
     return;
   }
 
+  const brokerResponseTime = meter.createHistogram('broker.response_time', {
+    description: 'Response time of carrier broker',
+    unit: 'ms',
+    valueType: ValueType.INT,
+  });
   try {
-    const startTime = Date.now();
+    const start = process.hrtime();
     const r = await fetch(`${process.env.CARRIER_BROKER_URL}/shipment`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(shipment),
     });
-    const endTime = Date.now();
-    const responseTime = endTime - startTime;
-    brokerResponseTime.record(responseTime, {
-      shipmentId: shipment.shipmentId,
-    });
+
+    const [s, ns] = process.hrtime(start);
+    const responseTime = s * 1000 + ns / 1e6; // Convert to milliseconds
+    logger.info('Broker response time', { responseTime });
+    brokerResponseTime.record(responseTime);
 
     if (r.ok) {
       logger.info('Shipment dispatched successfully', shipment);
