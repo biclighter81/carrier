@@ -28,3 +28,4 @@ coverage/
 
 # Weitere mögliche generierte Dateien
 *.tsbuildinfo
+*.pyc

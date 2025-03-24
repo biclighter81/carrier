@@ -54,11 +54,23 @@ const carrierQueues = Object.values(CarrierCode).reduce(
         port: Number(process.env.REDIS_PORT),
       },
     });
-    queueEvents.on('completed', () => {
-      logger.info('apa queueevent completed');
+    queueEvents.on('completed', (payload) => {
+      onCompleted({
+        jobId: payload.jobId,
+        returnvalue: payload.returnvalue,
+      });
     });
-    queueEvents.on('failed', onFailed);
-    queueEvents.on('stalled', onStalled);
+    queueEvents.on('failed', (payload) => {
+      onFailed({
+        jobId: payload.jobId,
+        failedReason: payload.failedReason,
+      });
+    });
+    queueEvents.on('stalled', (payload) => {
+      onStalled({
+        jobId: payload.jobId,
+      });
+    });
     return { ...acc, [cur]: queue };
   },
 
