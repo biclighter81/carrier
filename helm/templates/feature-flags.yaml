@@ -8,11 +8,126 @@ metadata:
 spec:
   flagSpec:
     flags:
-      dhl-flag:
+      # DHL
+      simulate.carrier.dhl.delay:
+        defaultVariant: 'off'
         variants:
-          sty: sty
-        defaultVariant: sty
-        state: ENABLED
+          on: true
+          off: false
+        targeting: {}
+
+      simulate.carrier.dhl.unavailable:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
+      simulate.carrier.dhl.partialSuccess:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
+      # UPS
+      simulate.carrier.ups.delay:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
+      simulate.carrier.ups.unavailable:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
+      simulate.carrier.ups.partialSuccess:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
+      # FedEx
+      simulate.carrier.fedex.delay:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
+      simulate.carrier.fedex.unavailable:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
+      simulate.carrier.fedex.partialSuccess:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
+      # Broker Simulation
+      simulate.broker.delay:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
+      simulate.broker.unavailable:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
+      # Internal Worker Simulation
+      simulate.internalWorker.slowProcessing:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
+      # Transfer Service Simulation
+      simulate.transferService.delay:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
+      # Redis Simulation
+      simulate.redis.flaky:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
+      # Global Chaos Mode
+      simulate.global.randomFailures:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
+      simulate.global.highLoad:
+        defaultVariant: 'off'
+        variants:
+          on: true
+          off: false
+        targeting: {}
+
 ---
 # Feature flag source custom resource, configuring flagd to source flags from FeatureFlag CRDs
 apiVersion: core.openfeature.dev/v1beta1

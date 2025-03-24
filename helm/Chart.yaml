@@ -7,6 +7,3 @@ dependencies:
   - name: redis
     version: 20.11.3
     repository: https://charts.bitnami.com/bitnami
-  - name: open-feature-operator
-    version: v0.8.5
-    repository: https://open-feature.github.io/open-feature-operator/

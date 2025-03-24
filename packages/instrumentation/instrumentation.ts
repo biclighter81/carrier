@@ -23,6 +23,8 @@ import { BullMQInstrumentation } from '@appsignal/opentelemetry-instrumentation-
 import { BullMQOtel } from 'bullmq-otel';
 import { OpenFeature } from '@openfeature/server-sdk';
 import { FlagdProvider } from '@openfeature/flagd-provider';
+import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
+import { ExpressInstrumentation } from '@opentelemetry/instrumentation-express';
 // Initialize OpenTelemetry SDK
 const sdk = new NodeSDK({
   resource: resourceFromAttributes({
@@ -48,6 +50,8 @@ const sdk = new NodeSDK({
   instrumentations: [
     getNodeAutoInstrumentations(),
     new BullMQInstrumentation(),
+    new HttpInstrumentation(),
+    new ExpressInstrumentation(),
   ],
 });
 

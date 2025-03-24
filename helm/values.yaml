@@ -1,5 +1,4 @@
 broker:
-  enabled: true
   replicas: 1
   image:
     repository: 'ghcr.io/biclighter81/carrier-broker'
@@ -12,7 +11,6 @@ broker:
       cpu: '100m'
       memory: '128Mi'
 wms:
-  enabled: true
   replicas: 1
   image:
     repository: 'ghcr.io/biclighter81/carrier-wms'
@@ -52,6 +50,3 @@ redis:
   architecture: standalone
   auth:
     enabled: false
-
-open-feature-operator:
-  otelCollectorUri: 'http://otel-opentelemetry-collector:4318'

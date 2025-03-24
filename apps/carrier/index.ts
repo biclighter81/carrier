@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
+
 import { BullMQOtel, logger, meter, flagClient } from 'instrumentation';
 import { Worker } from 'bullmq';
 import IORedis from 'ioredis';
@@ -8,30 +9,64 @@ import { Shipment } from 'types';
 const redis = new IORedis(process.env.REDIS_URL || 'redis://localhost:6379', {
   maxRetriesPerRequest: null,
 });
+
 const carrierCode = process.env.CARRIER_CODE!;
+const carrierKey = carrierCode.toLowerCase(); // für Flags
 logger.info(`Bootstrapping ${carrierCode} worker...`);
-setInterval(async () => {
-  const flag = await flagClient.getStringValue('dhl-flag', 'default-value');
-  logger.info('Feature flag value: ' + flag);
-}, 5000);
+
 const shipmentCounter = meter.createCounter('shipments_processed', {
   description: 'Counts the number of shipments processed',
 });
-const worker = new Worker<Shipment>(
+
+new Worker<Shipment>(
   carrierCode,
   async (job) => {
     logger.info(`Processing ${carrierCode} shipment`, {
       jobId: job.id,
       shipment: job.data,
     });
-    const ret = await processShipment(job.data);
+
+    // 🔁 Feature Flag Simulationen
+    const [simulateDelay, simulateUnavailable, simulatePartialSuccess] =
+      await Promise.all([
+        flagClient.getBooleanValue(
+          `simulate.carrier.${carrierKey}.delay`,
+          false
+        ),
+        flagClient.getBooleanValue(
+          `simulate.carrier.${carrierKey}.unavailable`,
+          false
+        ),
+        flagClient.getBooleanValue(
+          `simulate.carrier.${carrierKey}.partialSuccess`,
+          false
+        ),
+      ]);
+
+    if (simulateDelay) {
+      const delayMs = Math.floor(Math.random() * (4000 - 1000 + 1)) + 1000; // 1000–4000ms
+      logger.warn(
+        `Simulating processing delay for ${carrierCode}: ${delayMs}ms`
+      );
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    }
+
+    if (simulateUnavailable) {
+      logger.warn(`Simulated ${carrierCode} API unavailability triggered`);
+      throw new Error(`Simulated ${carrierCode} API outage`);
+    }
+
+    const result = await processShipment(job.data, simulatePartialSuccess);
+
     logger.info(`${carrierCode} shipment processed`, {
       jobId: job.id,
       shipment: job.data,
-      ret,
+      result,
     });
-    shipmentCounter.add(1, { carrierCode: carrierCode });
-    return ret;
+
+    shipmentCounter.add(1, { carrierCode });
+
+    return result;
   },
   {
     connection: redis,
@@ -39,48 +74,51 @@ const worker = new Worker<Shipment>(
     telemetry: new BullMQOtel(process.env.SERVICE_NAME!),
   }
 );
+
 logger.info(`📦 ${carrierCode} worker started!`);
 
-class ShippmentError extends Error {
+class ShipmentError extends Error {
   constructor(message: string) {
     super(message);
     this.name = 'ShipmentError';
   }
 }
 
-async function processShipment(shipment: Shipment) {
+async function processShipment(shipment: Shipment, simulatePartial: boolean) {
   const payload = transformToCarrierFormat(shipment);
+
   try {
     const res = await fetch(`${process.env.CARRIER_EXTERNAL_URL}/receive`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
+
     if (!res.ok) {
       logger.error('Failed to process shipment', {
         status: res.status,
         statusText: res.statusText,
         response: await res.text(),
       });
-      throw new ShippmentError(`Failed to process shipment: ${res.statusText}`);
-    } else {
-      const label = await res.json();
+      throw new ShipmentError(`Failed to process shipment: ${res.statusText}`);
+    }
 
-      return label;
+    const label = await res.json();
+
+    if (simulatePartial) {
+      logger.warn(`Simulating partial success for ${carrierCode}`);
+      delete label.trackingNumber;
     }
+
+    return label;
   } catch (error) {
-    if (error instanceof ShippmentError) {
-      throw error;
-    }
-    // Handle network errors or other unexpected errors
-    logger.error(`External ${carrierCode} API not reachable`, {
-      error,
-    });
+    if (error instanceof ShipmentError) throw error;
+
+    logger.error(`External ${carrierCode} API not reachable`, { error });
     throw new Error(`Error processing shipment: ${error}`);
   }
 }
+
 function transformToCarrierFormat(shipment: Shipment) {
   return {
     shipmentId: shipment.shipmentId,
