@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/biclighter81/carrier/compare/v1.8.1...v1.8.2) (2025-03-24)
+
+
+### Bug Fixes
+
+* **insturmentation:** historgram fix ([be98917](https://github.com/biclighter81/carrier/commit/be989176118253a88fbd76447254ad905aa20bc0))
+
 ## [1.8.1](https://github.com/biclighter81/carrier/compare/v1.8.0...v1.8.1) (2025-03-24)
 
 
