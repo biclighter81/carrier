@@ -1,3 +1,10 @@
+## [1.8.8](https://github.com/biclighter81/carrier/compare/v1.8.7...v1.8.8) (2025-03-24)
+
+
+### Bug Fixes
+
+* **instrumentation:** adds locustfile and fixes handling of queueevetns ([ae9422d](https://github.com/biclighter81/carrier/commit/ae9422d2255736a1b23dedc0c03a760e57775913))
+
 ## [1.8.7](https://github.com/biclighter81/carrier/compare/v1.8.6...v1.8.7) (2025-03-24)
 
 
