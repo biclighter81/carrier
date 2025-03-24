@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/biclighter81/carrier/compare/v1.8.11...v1.9.0) (2025-03-24)
+
+
+### Features
+
+* **instrumentation:** adds shipment counter metrics ([2ab71f5](https://github.com/biclighter81/carrier/commit/2ab71f5cdecd8f6dfa59bd04e279f1b023e481fd))
+
 ## [1.8.11](https://github.com/biclighter81/carrier/compare/v1.8.10...v1.8.11) (2025-03-24)
 
 
