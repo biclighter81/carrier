@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/biclighter81/carrier/compare/v1.5.2...v1.6.0) (2025-03-24)
+
+
+### Features
+
+* **instrumentation:** adds flagd config ([0f92def](https://github.com/biclighter81/carrier/commit/0f92def30c01070ada25bbd13005385f296ae378))
+
 ## [1.5.2](https://github.com/biclighter81/carrier/compare/v1.5.1...v1.5.2) (2025-03-23)
 
 
