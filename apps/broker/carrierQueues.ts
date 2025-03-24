@@ -54,7 +54,9 @@ const carrierQueues = Object.values(CarrierCode).reduce(
         port: Number(process.env.REDIS_PORT),
       },
     });
-    queueEvents.on('completed', onCompleted);
+    queueEvents.on('completed', () => {
+      logger.info('apa queueevent completed');
+    });
     queueEvents.on('failed', onFailed);
     queueEvents.on('stalled', onStalled);
     return { ...acc, [cur]: queue };
