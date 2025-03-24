@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/biclighter81/carrier/compare/v1.6.0...v1.6.1) (2025-03-24)
+
+
+### Bug Fixes
+
+* **dhl:** fixes flag logging ([0a0fe84](https://github.com/biclighter81/carrier/commit/0a0fe84b225f33332e45474b913b92a53f174b1f))
+
 # [1.6.0](https://github.com/biclighter81/carrier/compare/v1.5.2...v1.6.0) (2025-03-24)
 
 
