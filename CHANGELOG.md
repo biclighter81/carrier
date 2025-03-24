@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/biclighter81/carrier/compare/v1.9.1...v1.9.2) (2025-03-24)
+
+
+### Bug Fixes
+
+* **instrumentation:** removes unnessecary logs ([f73025b](https://github.com/biclighter81/carrier/commit/f73025b60249fb0eecd12154f21ce01979021760))
+
 ## [1.9.1](https://github.com/biclighter81/carrier/compare/v1.9.0...v1.9.1) (2025-03-24)
 
 
