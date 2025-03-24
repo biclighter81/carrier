@@ -13,7 +13,7 @@ const onCompleted = ({
   jobId: string;
   returnvalue: string;
 }) => {
-  logger.info('Shipment processed', {
+  logger.info('Shipment processed. Job completed.', {
     jobId,
     returnvalue,
   });
@@ -26,7 +26,7 @@ const onFailed = ({
   jobId: string;
   failedReason: string;
 }) => {
-  logger.error('Shipment processing failed', {
+  logger.error('Shipment processing failed. Job Failed.', {
     jobId,
     failedReason,
   });
