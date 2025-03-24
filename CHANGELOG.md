@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/biclighter81/carrier/compare/v1.7.0...v1.7.1) (2025-03-24)
+
+
+### Bug Fixes
+
+* **carrier:** removes fail block from carrier mocks ([2b259a1](https://github.com/biclighter81/carrier/commit/2b259a17c2ca27b6a7ecd17d4754974592cef11b))
+
 # [1.7.0](https://github.com/biclighter81/carrier/compare/v1.6.4...v1.7.0) (2025-03-24)
 
 
