@@ -1,3 +1,10 @@
+## [1.9.3](https://github.com/biclighter81/carrier/compare/v1.9.2...v1.9.3) (2025-03-24)
+
+
+### Bug Fixes
+
+* **broker:** removes job delay ([9139fc7](https://github.com/biclighter81/carrier/commit/9139fc7354596cc29502cae83c194e46812890be))
+
 ## [1.9.2](https://github.com/biclighter81/carrier/compare/v1.9.1...v1.9.2) (2025-03-24)
 
 
