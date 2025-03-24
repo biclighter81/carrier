@@ -52,3 +52,39 @@ spec:
   selector:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/component: external-dhl
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-external-ups
+  labels:
+    app.kubernetes.io/component: external-ups
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: external-ups
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-external-fedex
+  labels:
+    app.kubernetes.io/component: external-fedex
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: external-fedex

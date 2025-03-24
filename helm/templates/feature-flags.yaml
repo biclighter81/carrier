@@ -10,122 +10,138 @@ spec:
     flags:
       # DHL
       simulate.carrier.dhl.delay:
-        defaultVariant: 'off'
+        state: 'ENABLED'
+        defaultVariant: 'on'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       simulate.carrier.dhl.unavailable:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       simulate.carrier.dhl.partialSuccess:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       # UPS
       simulate.carrier.ups.delay:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       simulate.carrier.ups.unavailable:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       simulate.carrier.ups.partialSuccess:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       # FedEx
       simulate.carrier.fedex.delay:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       simulate.carrier.fedex.unavailable:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       simulate.carrier.fedex.partialSuccess:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       # Broker Simulation
       simulate.broker.delay:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       simulate.broker.unavailable:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       # Internal Worker Simulation
       simulate.internalWorker.slowProcessing:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       # Transfer Service Simulation
       simulate.transferService.delay:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       # Redis Simulation
       simulate.redis.flaky:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       # Global Chaos Mode
       simulate.global.randomFailures:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
       simulate.global.highLoad:
+        state: 'ENABLED'
         defaultVariant: 'off'
         variants:
-          on: true
-          off: false
+          'on': true
+          'off': false
         targeting: {}
 
 ---
