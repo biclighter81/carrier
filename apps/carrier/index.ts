@@ -1,7 +1,13 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { BullMQOtel, logger, meter, flagClient } from 'instrumentation';
+import {
+  BullMQOtel,
+  logger,
+  meter,
+  flagClient,
+  ValueType,
+} from 'instrumentation';
 import { Worker } from 'bullmq';
 import IORedis from 'ioredis';
 import { Shipment } from 'types';
@@ -17,13 +23,6 @@ logger.info(`Bootstrapping ${carrierCode} worker...`);
 const shipmentCounter = meter.createCounter('shipments_processed', {
   description: 'Counts the number of shipments processed',
 });
-const externalCarrierResponseTime = meter.createHistogram(
-  'external_carrier_api_duration_seconds',
-  {
-    description: 'Duration of external carrier API call in seconds',
-    unit: 's',
-  }
-);
 
 new Worker<Shipment>(
   carrierCode,
@@ -56,6 +55,14 @@ new Worker<Shipment>(
     }
 
     // 📊 Telemetrie
+    const externalCarrierResponseTime = meter.createHistogram(
+      'external.carrier.response_time',
+      {
+        description: 'Disribution of external carrier API response times',
+        unit: 'ms',
+        valueType: ValueType.INT,
+      }
+    );
     const start = process.hrtime();
     const result = await processShipment(
       job.data,

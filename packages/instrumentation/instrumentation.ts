@@ -1,6 +1,6 @@
 import packageJson from './package.json';
 import { NodeSDK } from '@opentelemetry/sdk-node';
-import { metrics } from '@opentelemetry/api';
+import { metrics, ValueType } from '@opentelemetry/api';
 import {
   ATTR_SERVICE_NAME,
   ATTR_SERVICE_VERSION,
@@ -84,4 +84,4 @@ OpenFeature.setProvider(
 );
 const flagClient = OpenFeature.getClient();
 
-export { logger, metrics, meter, sdk, BullMQOtel, flagClient };
+export { logger, metrics, meter, sdk, BullMQOtel, flagClient, ValueType };
