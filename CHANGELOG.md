@@ -1,3 +1,10 @@
+## [1.8.3](https://github.com/biclighter81/carrier/compare/v1.8.2...v1.8.3) (2025-03-24)
+
+
+### Bug Fixes
+
+* **instrumentation:** test of double value type ([69a8a87](https://github.com/biclighter81/carrier/commit/69a8a870f8a2c4f32ef479e0f573b539d1c1abe0))
+
 ## [1.8.2](https://github.com/biclighter81/carrier/compare/v1.8.1...v1.8.2) (2025-03-24)
 
 
