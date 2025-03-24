@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/biclighter81/carrier/compare/v1.8.0...v1.8.1) (2025-03-24)
+
+
+### Bug Fixes
+
+* **instrumentation:** external carrier histogram ([5a23a52](https://github.com/biclighter81/carrier/commit/5a23a52a1d00db7d29bc48f83ff4c03dd7b4b13d))
+
 # [1.8.0](https://github.com/biclighter81/carrier/compare/v1.7.1...v1.8.0) (2025-03-24)
 
 
