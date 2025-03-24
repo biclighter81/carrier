@@ -1,3 +1,10 @@
+## [1.6.4](https://github.com/biclighter81/carrier/compare/v1.6.3...v1.6.4) (2025-03-24)
+
+
+### Bug Fixes
+
+* **instrumentation:** disables flagd cache ([9ebc486](https://github.com/biclighter81/carrier/commit/9ebc486686a4c6f1ca1881800c1ac94721e92638))
+
 ## [1.6.3](https://github.com/biclighter81/carrier/compare/v1.6.2...v1.6.3) (2025-03-24)
 
 
