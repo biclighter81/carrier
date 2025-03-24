@@ -1,3 +1,10 @@
+## [1.8.6](https://github.com/biclighter81/carrier/compare/v1.8.5...v1.8.6) (2025-03-24)
+
+
+### Bug Fixes
+
+* **queue:** adds completed event ([6f9a51e](https://github.com/biclighter81/carrier/commit/6f9a51e73b0598df55ac0e37d7282a5a03602046))
+
 ## [1.8.5](https://github.com/biclighter81/carrier/compare/v1.8.4...v1.8.5) (2025-03-24)
 
 
