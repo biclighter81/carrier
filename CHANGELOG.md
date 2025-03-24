@@ -1,3 +1,10 @@
+## [1.8.5](https://github.com/biclighter81/carrier/compare/v1.8.4...v1.8.5) (2025-03-24)
+
+
+### Bug Fixes
+
+* **wms:** fixes carrier distribution ([04b54a1](https://github.com/biclighter81/carrier/commit/04b54a15fbcb693e9042d7ac3f3d959ec41d8322))
+
 ## [1.8.4](https://github.com/biclighter81/carrier/compare/v1.8.3...v1.8.4) (2025-03-24)
 
 
