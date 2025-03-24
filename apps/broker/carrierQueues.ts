@@ -1,11 +1,14 @@
 //create bullmq queues for carrier queues
 import { Job, Queue, QueueEvents, Worker } from 'bullmq';
 import { Shipment } from 'types';
-import { logger, BullMQOtel } from 'instrumentation';
+import { logger, BullMQOtel, meter } from 'instrumentation';
 
 //build a queue for every entry in the carrier code enum
 import { CarrierCode } from 'types';
 
+const shipmentCounter = meter.createCounter('shipments_processed', {
+  description: 'Counts the number of shipments processed',
+});
 const onCompleted = ({
   jobId,
   returnvalue,
@@ -13,6 +16,9 @@ const onCompleted = ({
   jobId: string;
   returnvalue: string;
 }) => {
+  shipmentCounter.add(1, {
+    status: 'completed',
+  });
   logger.info('Shipment processed. Job completed.', {
     jobId,
     returnvalue,
@@ -26,6 +32,9 @@ const onFailed = ({
   jobId: string;
   failedReason: string;
 }) => {
+  shipmentCounter.add(1, {
+    status: 'failed',
+  });
   logger.error('Shipment processing failed. Job Failed.', {
     jobId,
     failedReason,
