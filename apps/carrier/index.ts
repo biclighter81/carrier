@@ -17,6 +17,13 @@ logger.info(`Bootstrapping ${carrierCode} worker...`);
 const shipmentCounter = meter.createCounter('shipments_processed', {
   description: 'Counts the number of shipments processed',
 });
+const externalCarrierResponseTime = meter.createHistogram(
+  'external_carrier_response_time',
+  {
+    description: 'Records the response time of the external carrier API',
+    unit: 'ms',
+  }
+);
 
 new Worker<Shipment>(
   carrierCode,
@@ -43,21 +50,24 @@ new Worker<Shipment>(
         ),
       ]);
 
-    if (simulateDelay) {
-      const delayMs = Math.floor(Math.random() * (4000 - 1000 + 1)) + 1000; // 1000–4000ms
-      logger.warn(
-        `Simulating processing delay for ${carrierCode}: ${delayMs}ms`
-      );
-      await new Promise((resolve) => setTimeout(resolve, delayMs));
-    }
-
     if (simulateUnavailable) {
       logger.warn(`Simulated ${carrierCode} API unavailability triggered`);
       throw new Error(`Simulated ${carrierCode} API outage`);
     }
 
-    const result = await processShipment(job.data, simulatePartialSuccess);
-
+    // 📊 Telemetrie
+    const startTime = Date.now();
+    const result = await processShipment(
+      job.data,
+      simulatePartialSuccess,
+      simulateDelay
+    );
+    const endTime = Date.now();
+    const responseTime = endTime - startTime;
+    externalCarrierResponseTime.record(responseTime, {
+      carrierCode,
+      shipmentId: job.data.shipmentId,
+    });
     logger.info(`${carrierCode} shipment processed`, {
       jobId: job.id,
       shipment: job.data,
@@ -84,9 +94,17 @@ class ShipmentError extends Error {
   }
 }
 
-async function processShipment(shipment: Shipment, simulatePartial: boolean) {
+async function processShipment(
+  shipment: Shipment,
+  simulatePartial: boolean,
+  simulateDelay: boolean
+) {
   const payload = transformToCarrierFormat(shipment);
-
+  if (simulateDelay) {
+    const delayMs = Math.floor(Math.random() * (4000 - 1000 + 1)) + 1000; // 1000–4000ms
+    logger.warn(`Simulating processing delay for ${carrierCode}: ${delayMs}ms`);
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
+  }
   try {
     const res = await fetch(`${process.env.CARRIER_EXTERNAL_URL}/receive`, {
       method: 'POST',
