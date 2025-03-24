@@ -32,7 +32,6 @@ new Worker<Shipment>(
       shipment: job.data,
     });
 
-    // 🔁 Feature Flag Simulationen
     const [simulateDelay, simulateUnavailable, simulatePartialSuccess] =
       await Promise.all([
         flagClient.getBooleanValue(
@@ -48,11 +47,14 @@ new Worker<Shipment>(
           false
         ),
       ]);
-
     if (simulateUnavailable) {
-      logger.warn(`Simulated ${carrierCode} API unavailability triggered`);
-      logger.error(`External ${carrierCode} API not reachable`);
-      throw new Error(`Simulated ${carrierCode} API outage`);
+      logger.warn('External carrier will simulate unavailability');
+    }
+    if (simulateDelay) {
+      logger.warn('External carrier will simulate delay');
+    }
+    if (simulatePartialSuccess) {
+      logger.warn('External carrier will simulate partial success');
     }
 
     // 📊 Telemetrie
@@ -65,11 +67,7 @@ new Worker<Shipment>(
       }
     );
     const start = process.hrtime();
-    const result = await processShipment(
-      job.data,
-      simulatePartialSuccess,
-      simulateDelay
-    );
+    const result = await processShipment(job.data);
     const [s, ns] = process.hrtime(start);
     const duration = s + ns / 1e6; // convert to milliseconds
     externalCarrierResponseTime.record(duration, {
@@ -101,17 +99,8 @@ class ShipmentError extends Error {
   }
 }
 
-async function processShipment(
-  shipment: Shipment,
-  simulatePartial: boolean,
-  simulateDelay: boolean
-) {
+async function processShipment(shipment: Shipment) {
   const payload = transformToCarrierFormat(shipment);
-  if (simulateDelay) {
-    const delayMs = Math.floor(Math.random() * (4000 - 1000 + 1)) + 1000; // 1000–4000ms
-    logger.warn(`Simulating processing delay for ${carrierCode}: ${delayMs}ms`);
-    await new Promise((resolve) => setTimeout(resolve, delayMs));
-  }
   try {
     const res = await fetch(`${process.env.CARRIER_EXTERNAL_URL}/receive`, {
       method: 'POST',
@@ -129,15 +118,6 @@ async function processShipment(
     }
 
     const label = await res.json();
-
-    if (simulatePartial) {
-      logger.warn(`Simulating partial success for ${carrierCode}`);
-      // Fail in 10% of the cases
-      if (Math.random() < 0.1) {
-        logger.error('Simulated partial success triggered');
-        throw new ShipmentError(`Simulated partial fail!`);
-      }
-    }
 
     return label;
   } catch (error) {
