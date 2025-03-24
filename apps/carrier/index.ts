@@ -51,6 +51,7 @@ new Worker<Shipment>(
 
     if (simulateUnavailable) {
       logger.warn(`Simulated ${carrierCode} API unavailability triggered`);
+      logger.error(`External ${carrierCode} API not reachable`);
       throw new Error(`Simulated ${carrierCode} API outage`);
     }
 
@@ -131,7 +132,11 @@ async function processShipment(
 
     if (simulatePartial) {
       logger.warn(`Simulating partial success for ${carrierCode}`);
-      delete label.trackingNumber;
+      // Fail in 10% of the cases
+      if (Math.random() < 0.1) {
+        logger.error('Simulated partial success triggered');
+        throw new ShipmentError(`Simulated partial fail!`);
+      }
     }
 
     return label;
