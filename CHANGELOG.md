@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/biclighter81/carrier/compare/v1.6.4...v1.7.0) (2025-03-24)
+
+
+### Features
+
+* **instrumentation:** adds flag checks to services and express instrumentation ([cad2f6f](https://github.com/biclighter81/carrier/commit/cad2f6f1de6b48b4f2695470b3e5f2ca098e0f28))
+
 ## [1.6.4](https://github.com/biclighter81/carrier/compare/v1.6.3...v1.6.4) (2025-03-24)
 
 
