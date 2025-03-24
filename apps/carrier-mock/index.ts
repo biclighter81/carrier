@@ -4,7 +4,8 @@ import { logger } from 'instrumentation';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { Shipment, ShipmentLabel } from 'types';
-logger.info('Bootstrapping carrier DHL...');
+const carrierCode = process.env.CARRIER_CODE!;
+logger.info(`Bootstrapping carrier ${carrierCode}...`);
 
 const app = express();
 app.use(bodyParser.json());
@@ -19,7 +20,7 @@ app.post('/receive', (req, res) => {
     });
   } else {
     const label: ShipmentLabel = {
-      labelUrl: 'https://dhl.com/label.pdf',
+      labelUrl: `https://${carrierCode}.com/label.pdf`,
       labelFormat: 'PDF',
       labelType: 'PDF',
       labelSize: '4x6',
@@ -30,7 +31,7 @@ app.post('/receive', (req, res) => {
         ^XZ
         `,
       trackingNumber: '1234567890',
-      trackingUrl: 'https://dhl.com/track/1234567890',
+      trackingUrl: `https://${carrierCode}.com/track/1234567890`,
     };
     res.status(200).json({
       label,
@@ -39,5 +40,5 @@ app.post('/receive', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  logger.info(`🚚 External Carrier DHL is running on port ${PORT}`);
+  logger.info(`🚚 External Carrier ${carrierCode} is running on port ${PORT}`);
 });

@@ -1,9 +1,9 @@
-name: carrier-external-dhl
-run-name: Build Job for carrier-external-dhl-${{github.event.client_payload.version}} on branch ${{github.event.client_payload.branch}}
+name: carrier-external
+run-name: Build Job for carrier-external-${{github.event.client_payload.version}} on branch ${{github.event.client_payload.branch}}
 on:
   repository_dispatch:
     types:
-      - 'build-carrier-external-dhl'
+      - 'build-carrier-external'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,7 +15,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/biclighter81/carrier-external-dhl
+            ghcr.io/biclighter81/carrier-external
           tags: |
             ${{github.event.client_payload.version}}
             ${{github.event.client_payload.branch}}.next
@@ -45,7 +45,7 @@ jobs:
         run: |
           pnpm install --frozen-lockfile
           pnpm run -r build:pkg
-          pnpm deploy --filter carrier-external-dhl deploy
+          pnpm deploy --filter carrier-external deploy
           cd deploy
           pnpm run build
       - name: Build + Push

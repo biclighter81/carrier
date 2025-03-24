@@ -160,7 +160,7 @@ metadata:
     app.kubernetes.io/component: external-dhl
     app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
-  replicas: {{ .Values.carriers.external.dhl.replicas }}
+  replicas: {{ .Values.carriers.external.replicas }}
   selector:
     matchLabels:
       app.kubernetes.io/component: external-dhl
@@ -176,7 +176,7 @@ spec:
       containers:
         - name: external-dhl
           imagePullPolicy: Always
-          image: "{{ .Values.carriers.external.dhl.image.repository }}:{{ .Values.carriers.external.dhl.image.tag }}"
+          image: "{{ .Values.carriers.external.image.repository }}:{{ .Values.carriers.external.image.tag }}"
           ports:
             - name: http
               containerPort: 3000
@@ -184,6 +184,8 @@ spec:
           env:
             - name: SERVICE_NAME
               value: "carrier-external-dhl"
+            - name: CARRIER_CODE
+              value: "DHL"
             - name: SERVICE_GROUP
               value: "carrier-external"
             - name: OTEL_COLLECTOR_URL

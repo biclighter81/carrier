@@ -101,7 +101,7 @@ importers:
         specifier: ^5.8.2
         version: 5.8.2
 
-  apps/carrier-mocks/dhl:
+  apps/carrier-mocks:
     dependencies:
       body-parser:
         specifier: ^1.20.3
@@ -114,13 +114,13 @@ importers:
         version: 4.21.2
       instrumentation:
         specifier: workspace:*
-        version: link:../../../packages/instrumentation
+        version: link:../../packages/instrumentation
       nodemon:
         specifier: ^3.1.9
         version: 3.1.9
       types:
         specifier: workspace:*
-        version: link:../../../packages/types
+        version: link:../../packages/types
     devDependencies:
       '@types/body-parser':
         specifier: ^1.19.5
@@ -131,31 +131,6 @@ importers:
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@22.13.10)(typescript@5.8.2)
-      typescript:
-        specifier: ^5.8.2
-        version: 5.8.2
-
-  apps/carrier/dhl:
-    dependencies:
-      bullmq:
-        specifier: ^5.44.0
-        version: 5.44.0
-      dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
-      instrumentation:
-        specifier: workspace:*
-        version: link:../../../packages/instrumentation
-      ioredis:
-        specifier: ^5.6.0
-        version: 5.6.0
-      nodemon:
-        specifier: ^3.1.9
-        version: 3.1.9
-      types:
-        specifier: workspace:*
-        version: link:../../../packages/types
-    devDependencies:
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
