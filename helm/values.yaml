@@ -1,5 +1,5 @@
 broker:
-  replicas: 1
+  replicas: 3
   image:
     repository: 'ghcr.io/biclighter81/carrier-broker'
     tag: 'latest'
@@ -11,7 +11,7 @@ broker:
       cpu: '100m'
       memory: '128Mi'
 wms:
-  replicas: 1
+  replicas: 3
   image:
     repository: 'ghcr.io/biclighter81/carrier-wms'
     tag: 'latest'

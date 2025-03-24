@@ -27,69 +27,61 @@ const shipmentCounter = meter.createCounter('shipments_processed', {
 new Worker<Shipment>(
   carrierCode,
   async (job) => {
-    try {
-      logger.info(`Processing ${carrierCode} shipment`, {
-        jobId: job.id,
-        shipment: job.data,
-      });
+    logger.info(`Processing ${carrierCode} shipment`, {
+      jobId: job.id,
+      shipment: job.data,
+    });
 
-      const [simulateDelay, simulateUnavailable, simulatePartialSuccess] =
-        await Promise.all([
-          flagClient.getBooleanValue(
-            `simulate.carrier.${carrierKey}.delay`,
-            false
-          ),
-          flagClient.getBooleanValue(
-            `simulate.carrier.${carrierKey}.unavailable`,
-            false
-          ),
-          flagClient.getBooleanValue(
-            `simulate.carrier.${carrierKey}.partialSuccess`,
-            false
-          ),
-        ]);
-      if (simulateUnavailable) {
-        logger.warn('External carrier will simulate unavailability');
-      }
-      if (simulateDelay) {
-        logger.warn('External carrier will simulate delay');
-      }
-      if (simulatePartialSuccess) {
-        logger.warn('External carrier will simulate partial success');
-      }
-
-      // 📊 Telemetrie
-      const externalCarrierResponseTime = meter.createHistogram(
-        'external.carrier.response_time',
-        {
-          description: 'Disribution of external carrier API response times',
-          unit: 'ms',
-          valueType: ValueType.INT,
-        }
-      );
-      const start = process.hrtime();
-      const result = await processShipment(job.data);
-      const [s, ns] = process.hrtime(start);
-      const duration = s + ns / 1e6; // convert to milliseconds
-      externalCarrierResponseTime.record(duration, {
-        carrierCode,
-      });
-      logger.info(`${carrierCode} shipment processed`, {
-        jobId: job.id,
-        shipment: job.data,
-        result,
-      });
-
-      shipmentCounter.add(1, { carrierCode });
-
-      return result;
-    } catch (error) {
-      logger.error(`Error processing shipment`, {
-        jobId: job.id,
-        error,
-      });
-      throw error;
+    const [simulateDelay, simulateUnavailable, simulatePartialSuccess] =
+      await Promise.all([
+        flagClient.getBooleanValue(
+          `simulate.carrier.${carrierKey}.delay`,
+          false
+        ),
+        flagClient.getBooleanValue(
+          `simulate.carrier.${carrierKey}.unavailable`,
+          false
+        ),
+        flagClient.getBooleanValue(
+          `simulate.carrier.${carrierKey}.partialSuccess`,
+          false
+        ),
+      ]);
+    if (simulateUnavailable) {
+      logger.warn('External carrier will simulate unavailability');
     }
+    if (simulateDelay) {
+      logger.warn('External carrier will simulate delay');
+    }
+    if (simulatePartialSuccess) {
+      logger.warn('External carrier will simulate partial success');
+    }
+
+    // 📊 Telemetrie
+    const externalCarrierResponseTime = meter.createHistogram(
+      'external.carrier.response_time',
+      {
+        description: 'Disribution of external carrier API response times',
+        unit: 'ms',
+        valueType: ValueType.INT,
+      }
+    );
+    const start = process.hrtime();
+    const result = await processShipment(job.data);
+    const [s, ns] = process.hrtime(start);
+    const duration = s + ns / 1e6; // convert to milliseconds
+    externalCarrierResponseTime.record(duration, {
+      carrierCode,
+    });
+    logger.info(`${carrierCode} shipment processed`, {
+      jobId: job.id,
+      shipment: job.data,
+      result,
+    });
+
+    shipmentCounter.add(1, { carrierCode });
+
+    return result;
   },
   {
     connection: redis,
