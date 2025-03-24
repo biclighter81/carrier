@@ -11,7 +11,7 @@ const redis = new IORedis(process.env.REDIS_URL || 'redis://localhost:6379', {
 logger.info('Bootstrapping DHL worker...');
 setInterval(async () => {
   const flag = await flagClient.getStringValue('dhl-flag', 'default-value');
-  logger.info('Feature flag value:', { flag });
+  logger.info('Feature flag value: ' + flag);
 }, 5000);
 const shipmentCounter = meter.createCounter('shipments_processed', {
   description: 'Counts the number of shipments processed',
