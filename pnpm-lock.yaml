@@ -101,7 +101,7 @@ importers:
         specifier: ^5.8.2
         version: 5.8.2
 
-  apps/carrier-mocks:
+  apps/carrier-mock:
     dependencies:
       body-parser:
         specifier: ^1.20.3
