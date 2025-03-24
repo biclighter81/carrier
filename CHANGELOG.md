@@ -1,3 +1,11 @@
+## [1.6.3](https://github.com/biclighter81/carrier/compare/v1.6.2...v1.6.3) (2025-03-24)
+
+
+### Bug Fixes
+
+* **carrier:** moves from specific external carrier implementation to generic ([ac3568e](https://github.com/biclighter81/carrier/commit/ac3568e60ffc478b08293bd9be997c5f30f8954d))
+* **workspace:** fixes pnpm lock ([a9337fd](https://github.com/biclighter81/carrier/commit/a9337fd37c855190b01f0e173b41021c7b4510d3))
+
 ## [1.6.2](https://github.com/biclighter81/carrier/compare/v1.6.1...v1.6.2) (2025-03-24)
 
 
