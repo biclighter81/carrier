@@ -19,7 +19,7 @@ spec:
 
       simulate.carrier.dhl.unavailable:
         state: 'ENABLED'
-        defaultVariant: 'off'
+        defaultVariant: 'on'
         variants:
           'on': true
           'off': false

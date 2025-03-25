@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-locust-scripts-cm
+data:
+  locustfile.py: |
+    from locust import HttpUser, task
+
+    class Shipment(HttpUser):
+        @task
+        def Shipment(self):
+            self.client.post('/shipment/dispatch')

@@ -83,7 +83,7 @@ app.post('/shipment', async (req, res) => {
         delay: 1000,
       },
       removeOnComplete: true,
-      removeOnFail: false,
+      removeOnFail: true,
     });
 
     logger.info('Shipment added to queue', {
