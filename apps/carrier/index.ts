@@ -25,7 +25,7 @@ const shipmentCounter = meter.createCounter('shipments_processed', {
 });
 
 new Worker<Shipment>(
-  carrierCode,
+  carrierCode, // Entsprechend dem Carrier Code aus der Umgebungsvariable
   async (job) => {
     logger.info(`Processing ${carrierCode} shipment`, {
       jobId: job.id,

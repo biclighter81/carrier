@@ -71,7 +71,6 @@ logger.info(
 );
 // Create meter
 const meter = metrics.getMeter(process.env.SERVICE_NAME || 'unknown-service');
-
 // Create Feature Flag Provider
 OpenFeature.setProvider(
   new FlagdProvider(

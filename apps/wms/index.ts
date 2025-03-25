@@ -49,6 +49,7 @@ app.post('/shipment/dispatch', async (req, res) => {
     return;
   }
 
+  // 📊 Metriken
   const brokerResponseTime = meter.createHistogram('broker.response_time', {
     description: 'Response time of carrier broker',
     unit: 'ms',

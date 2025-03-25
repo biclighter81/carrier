@@ -52,7 +52,7 @@ spec:
 
       simulate.carrier.ups.partialSuccess:
         state: 'ENABLED'
-        defaultVariant: 'on'
+        defaultVariant: 'off'
         variants:
           'on': true
           'off': false

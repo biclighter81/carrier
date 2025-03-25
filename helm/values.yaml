@@ -1,5 +1,5 @@
 broker:
-  replicas: 3
+  replicas: 1
   image:
     repository: 'ghcr.io/biclighter81/carrier-broker'
     tag: 'latest'
