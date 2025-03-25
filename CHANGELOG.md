@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/biclighter81/carrier/compare/v1.9.3...v1.10.0) (2025-03-25)
+
+
+### Features
+
+* **locust:** adds distributed locust helm deployment ([24f827a](https://github.com/biclighter81/carrier/commit/24f827a8e754c5626baadeff898d5f1e311a7bd0))
+
 ## [1.9.3](https://github.com/biclighter81/carrier/compare/v1.9.2...v1.9.3) (2025-03-24)
 
 
