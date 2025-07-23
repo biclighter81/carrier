@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/biclighter81/carrier/compare/v1.10.0...v1.11.0) (2025-07-23)
+
+
+### Features
+
+* Add standalone Dockerfiles for broker, carrier, carrier-mock, and wms applications ([3f403ea](https://github.com/biclighter81/carrier/commit/3f403eab7cdf7ca7e55a44dc49c5dcf8acd4ba3c))
+
 # [1.10.0](https://github.com/biclighter81/carrier/compare/v1.9.3...v1.10.0) (2025-03-25)
 
 
