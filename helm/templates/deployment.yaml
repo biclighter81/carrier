@@ -17,8 +17,10 @@ spec:
         app.kubernetes.io/component: broker
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      {{- if .Values.imagePullSecret }}
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
+      {{- end }}
       containers:
         - name: broker
           imagePullPolicy: Always
@@ -33,7 +35,7 @@ spec:
             - name: SERVICE_GROUP
               value: "carrier"
             - name: OTEL_COLLECTOR_URL
-              value: "http://otel-opentelemetry-collector:4318"
+              value: "{{ .Values.collectorUrl }}"
             - name: REDIS_HOST
               value: "carrier-redis-master"
             - name: REDIS_PORT
@@ -67,8 +69,10 @@ spec:
         app.kubernetes.io/component: wms
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      {{- if .Values.imagePullSecret }}
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
+      {{- end }}
       containers:
         - name: wms
           imagePullPolicy: Always
@@ -83,7 +87,7 @@ spec:
             - name: SERVICE_GROUP
               value: "carrier"
             - name: OTEL_COLLECTOR_URL
-              value: "http://otel-opentelemetry-collector:4318"
+              value: "{{ .Values.collectorUrl }}"
             - name: CARRIER_BROKER_URL
               value: "http://{{ .Release.Name }}-broker:3000"
             - name: FLAGD_HOST
@@ -116,8 +120,10 @@ spec:
         app.kubernetes.io/component: internal-dhl
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      {{- if .Values.imagePullSecret }}
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
+      {{- end }}
       containers:
         - name: internal-dhl
           imagePullPolicy: Always
@@ -134,7 +140,7 @@ spec:
             - name: SERVICE_GROUP
               value: "carrier"
             - name: OTEL_COLLECTOR_URL
-              value: "http://otel-opentelemetry-collector:4318"
+              value: "{{ .Values.collectorUrl }}"
             - name: CARRIER_BROKER_URL
               value: "http://{{ .Release.Name }}-broker:3000"
             - name: REDIS_URL
@@ -170,8 +176,10 @@ spec:
         app.kubernetes.io/component: internal-ups
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      {{- if .Values.imagePullSecret }}
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
+      {{- end }}
       containers:
         - name: internal-ups
           imagePullPolicy: Always
@@ -188,7 +196,7 @@ spec:
             - name: SERVICE_GROUP
               value: "carrier"
             - name: OTEL_COLLECTOR_URL
-              value: "http://otel-opentelemetry-collector:4318"
+              value: "{{ .Values.collectorUrl }}"
             - name: CARRIER_BROKER_URL
               value: "http://{{ .Release.Name }}-broker:3000"
             - name: REDIS_URL
@@ -224,8 +232,10 @@ spec:
         app.kubernetes.io/component: internal-fedex
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      {{- if .Values.imagePullSecret }}
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
+      {{- end }}
       containers:
         - name: internal-fedex
           imagePullPolicy: Always
@@ -242,7 +252,7 @@ spec:
             - name: SERVICE_GROUP
               value: "carrier"
             - name: OTEL_COLLECTOR_URL
-              value: "http://otel-opentelemetry-collector:4318"
+              value: "{{ .Values.collectorUrl }}"
             - name: CARRIER_BROKER_URL
               value: "http://{{ .Release.Name }}-broker:3000"
             - name: REDIS_URL
@@ -279,8 +289,10 @@ spec:
         app.kubernetes.io/component: external-dhl
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      {{- if .Values.imagePullSecret }}
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
+      {{- end }}
       containers:
         - name: external-dhl
           imagePullPolicy: Always
@@ -297,7 +309,7 @@ spec:
             - name: SERVICE_GROUP
               value: "carrier-external"
             - name: OTEL_COLLECTOR_URL
-              value: "http://otel-opentelemetry-collector:4318"
+              value: "{{ .Values.collectorUrl }}"
             - name: FLAGD_HOST
               value: "flagd-carrier"
           resources:
@@ -327,8 +339,10 @@ spec:
         app.kubernetes.io/component: external-ups
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      {{- if .Values.imagePullSecret }}
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
+      {{- end }}
       containers:
         - name: external-ups
           imagePullPolicy: Always
@@ -345,7 +359,7 @@ spec:
             - name: SERVICE_GROUP
               value: "carrier-external"
             - name: OTEL_COLLECTOR_URL
-              value: "http://otel-opentelemetry-collector:4318"
+              value: "{{ .Values.collectorUrl }}"
             - name: FLAGD_HOST
               value: "flagd-carrier"
           resources:
@@ -375,8 +389,10 @@ spec:
         app.kubernetes.io/component: external-fedex
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      {{- if .Values.imagePullSecret }}
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
+      {{- end }}
       containers:
         - name: external-fedex
           imagePullPolicy: Always
@@ -393,7 +409,7 @@ spec:
             - name: SERVICE_GROUP
               value: "carrier-external"
             - name: OTEL_COLLECTOR_URL
-              value: "http://otel-opentelemetry-collector:4318"
+              value: "{{ .Values.collectorUrl }}"
             - name: FLAGD_HOST
               value: "flagd-carrier"
           resources:

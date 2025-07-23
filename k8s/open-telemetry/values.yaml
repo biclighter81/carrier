@@ -1,0 +1,159 @@
+open-feature-operator:
+  otelCollectorUri: "http://open-telemetry-opentelemetry-collector:4318"
+loki:
+  chunksCache:
+    enabled: false
+  deploymentMode: SingleBinary
+  loki:
+    limits_config:
+      otlp_config:
+        resource_attributes:
+          attributes_config:
+            - action: index_label
+              attributes:
+                - service.group
+    commonConfig:
+      replication_factor: 1
+    auth_enabled: false
+    schemaConfig:
+      configs:
+        - from: 2025-01-01
+          object_store: s3
+          store: tsdb
+          schema: v13
+          index:
+            prefix: index_
+            period: 24h
+    storage:
+      bucketNames:
+        chunks: loki-chunks
+        ruler: loki-ruler
+        admin: loki-admin
+      type: s3
+      s3:
+        endpoint: https://s3.rimraf.de
+        region: eu-west
+        secretAccessKey: DW4sm3ztuU0mlCY1iTsc8zQFYslwlWwT21cz8nPf
+        accessKeyId: pX2hhnq6RdgfGD6pymfi
+        s3ForcePathStyle: true
+
+opensearch:
+  extraEnvs:
+    - name: "DISABLE_INSTALL_DEMO_CONFIG"
+      value: "true"
+    - name: "DISABLE_SECURITY_PLUGIN"
+      value: "true"
+  envFrom:
+    - secretRef:
+        name: opensearch
+opensearch-dashboards:
+  opensearchHosts: http://opensearch-cluster-master:9200
+  extraEnvs:
+    - name: DISABLE_SECURITY_DASHBOARDS_PLUGIN
+      value: "true"
+tempo:
+  tempo:
+    metricsGenerator:
+      enabled: true
+      remoteWriteUrl: "http://promstack-kube-prometheus-prometheus.monitoring:9090/api/v1/write"
+  tempoQuery:
+    enabled: true
+  persistence:
+    enabled: true
+    size: 5Gi
+jaeger:
+  provisionDataStore:
+    cassandra: false
+  storage:
+    type: memory
+  allInOne:
+    enabled: true
+    args:
+      - "--memory.max-traces=5000"
+      - "--prometheus.server-url=http://promstack-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"
+      - "--prometheus.query.normalize-calls=true"
+      - "--prometheus.query.normalize-duration=true"
+    extraEnv:
+      - name: METRICS_STORAGE_TYPE
+        value: prometheus
+      - name: COLLECTOR_OTLP_GRPC_HOST_PORT
+        value: 0.0.0.0:4317
+      - name: COLLECTOR_OTLP_HTTP_HOST_PORT
+        value: 0.0.0.0:4318
+  agent:
+    enabled: false
+  collector:
+    enabled: false
+  query:
+    enabled: false
+opentelemetry-collector:
+  mode: deployment
+  image:
+    repository: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib
+    tag: 0.120.0
+  presets:
+    hostMetrics:
+      enabled: true
+    kubernetesAttributes:
+      enabled: true
+  config:
+    exporters:
+      # debug:
+      #   verbosity: detailed
+      ## Create an exporter to Jaeger using the standard `otlp` export format
+      otlp:
+        endpoint: open-telemetry-jaeger-collector:4317
+        tls:
+          insecure: true
+      otlp/tempo:
+        endpoint: open-telemetry-tempo:4317
+        tls:
+          insecure: true
+      # Create an exporter to Prometheus (metrics)
+      otlphttp/prometheus:
+        endpoint: http://promstack-kube-prometheus-prometheus:9090/api/v1/otlp
+        tls:
+          insecure: true
+      otlphttp/logs:
+        endpoint: http://open-telemetry-loki:3100/otlp
+        tls:
+          insecure: true
+      opensearch:
+        logs_index: otel
+        http:
+          endpoint: http://opensearch-cluster-master:9200
+          tls:
+            insecure: true
+    processors:
+      resource:
+        attributes:
+          - key: service.instance.id
+            from_attribute: k8s.pod.uid
+            action: insert
+    service:
+      pipelines:
+        traces:
+          processors: [resource, batch]
+          exporters: [otlp, otlp/tempo]
+          receivers: [otlp]
+        metrics:
+          receivers: [otlp]
+          processors: [resource, batch]
+          exporters: [otlphttp/prometheus]
+        logs:
+          receivers: [otlp]
+          processors: [resource, batch]
+          exporters: [otlphttp/logs, debug]
+      telemetry:
+        logs:
+          level: "DEBUG"
+        metrics:
+          level: detailed
+          readers:
+            - periodic:
+                interval: 10000
+                timeout: 5000
+                exporter:
+                  otlp:
+                    protocol: http/protobuf
+                    endpoint: http://open-telemetry-opentelemetry-collector:4318

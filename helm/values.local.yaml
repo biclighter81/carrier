@@ -1,7 +1,7 @@
 broker:
-  replicas: 5
+  replicas: 3
   image:
-    repository: "ghcr.io/biclighter81/carrier-broker"
+    repository: "localhost:5001/broker"
     tag: "latest"
   resources:
     limits:
@@ -11,9 +11,9 @@ broker:
       cpu: "100m"
       memory: "128Mi"
 wms:
-  replicas: 3
+  replicas: 1
   image:
-    repository: "ghcr.io/biclighter81/carrier-wms"
+    repository: "localhost:5001/wms"
     tag: "latest"
   resources:
     limits:
@@ -33,15 +33,15 @@ carriers:
   internal:
     replicas: 1
     image:
-      repository: ghcr.io/biclighter81/carrier-internal
+      repository: localhost:5001/carrier
       tag: latest
   external:
     replicas: 1
     image:
-      repository: ghcr.io/biclighter81/carrier-external
+      repository: localhost:5001/carrier-mock
       tag: latest
-collectorUrl: "http://otel-opentelemetry-collector:4318"
-imagePullSecret: "biclighter81-ghcr"
+collectorUrl: "http://open-telemetry-opentelemetry-collector:4318"
+imagePullSecret:
 redis:
   enabled: true
   master:

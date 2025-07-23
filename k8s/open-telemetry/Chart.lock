@@ -1,0 +1,18 @@
+dependencies:
+- name: jaeger
+  repository: https://jaegertracing.github.io/helm-charts
+  version: 3.4.0
+- name: loki
+  repository: https://grafana.github.io/helm-charts
+  version: 6.28.0
+- name: opentelemetry-collector
+  repository: https://open-telemetry.github.io/opentelemetry-helm-charts
+  version: 0.118.0
+- name: tempo
+  repository: https://grafana.github.io/helm-charts
+  version: 1.18.3
+- name: open-feature-operator
+  repository: https://open-feature.github.io/open-feature-operator/
+  version: v0.8.5
+digest: sha256:b7441dd9bb49d28073184b3b64be8db1d2e2797fe264f2c863d449b31cb4621a
+generated: "2025-07-23T09:43:13.6155172+02:00"

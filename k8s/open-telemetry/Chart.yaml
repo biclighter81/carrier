@@ -1,0 +1,20 @@
+apiVersion: v2
+name: open-telemetry
+version: 0.1.0
+appVersion: 0.1.0
+dependencies:
+  - name: jaeger
+    version: 3.4.0
+    repository: https://jaegertracing.github.io/helm-charts
+  - name: loki
+    version: 6.28.0
+    repository: https://grafana.github.io/helm-charts
+  - name: opentelemetry-collector
+    version: 0.118.0
+    repository: https://open-telemetry.github.io/opentelemetry-helm-charts
+  - name: tempo
+    version: 1.18.3
+    repository: https://grafana.github.io/helm-charts
+  - name: open-feature-operator
+    version: v0.8.5
+    repository: https://open-feature.github.io/open-feature-operator/
