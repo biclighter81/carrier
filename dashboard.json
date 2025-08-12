@@ -1,9 +1,101 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    },
+    {
+      "name": "DS_TEMPO",
+      "label": "tempo",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "tempo",
+      "pluginName": "Tempo"
+    },
+    {
+      "name": "DS_LOKI",
+      "label": "loki",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "loki",
+      "pluginName": "Loki"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "bargauge",
+      "name": "Bar gauge",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "geomap",
+      "name": "Geomap",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "12.0.2"
+    },
+    {
+      "type": "panel",
+      "id": "logs",
+      "name": "Logs",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "loki",
+      "name": "Loki",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "nodeGraph",
+      "name": "Node Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "tempo",
+      "name": "Tempo",
+      "version": "12.0.2"
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
         "builtIn": 1,
-        "datasource": { "type": "grafana", "uid": "-- Grafana --" },
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -15,14 +107,19 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 29,
+  "id": null,
   "links": [],
   "panels": [
     {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "axisBorderShow": false,
             "axisCenteredZero": false,
@@ -34,28 +131,54 @@
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
-            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
             "insertNulls": false,
             "lineInterpolation": "smooth",
-            "lineStyle": { "fill": "solid" },
+            "lineStyle": {
+              "fill": "solid"
+            },
             "lineWidth": 1,
             "pointSize": 4,
-            "scaleDistribution": { "type": "linear" },
+            "scaleDistribution": {
+              "type": "linear"
+            },
             "showPoints": "always",
             "spanNulls": false,
-            "stacking": { "group": "A", "mode": "none" },
-            "thresholdsStyle": { "mode": "off" }
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [{ "color": "green" }, { "color": "red", "value": 80 }]
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
           },
           "unit": "ms"
         },
         "overrides": []
       },
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
       "id": 1,
       "options": {
         "legend": {
@@ -64,15 +187,22 @@
           "placement": "bottom",
           "showLegend": true
         },
-        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "12.0.2",
       "targets": [
         {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "histogram_quantile(0.99, sum by(le) (rate({\"http.server.duration_milliseconds_bucket\", job=\"broker\"}[5m])))",
+          "editorMode": "code",
+          "expr": "histogram_quantile(0.99, sum by(le) (rate({\"http_server_duration_milliseconds_bucket\", exported_job=\"broker\"}[$__rate_interval])))",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "P99",
@@ -81,10 +211,13 @@
           "useBackend": false
         },
         {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "histogram_quantile(0.95, sum by(le) (rate({\"http.server.duration_milliseconds_bucket\", job=\"broker\"}[5m])))",
+          "editorMode": "code",
+          "expr": "histogram_quantile(0.95, sum by(le) (rate({\"http_server_duration_milliseconds_bucket\", exported_job=\"broker\"}[$__rate_interval])))",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
@@ -94,10 +227,13 @@
           "useBackend": false
         },
         {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "histogram_quantile(0.5, sum by(le) (rate({\"http.server.duration_milliseconds_bucket\", job=\"broker\"}[5m])))",
+          "editorMode": "code",
+          "expr": "histogram_quantile(0.5, sum by(le) (rate({\"http_server_duration_milliseconds_bucket\", exported_job=\"broker\"}[$__rate_interval])))",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
@@ -111,10 +247,15 @@
       "type": "timeseries"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "axisBorderShow": false,
             "axisCenteredZero": false,
@@ -126,28 +267,54 @@
             "drawStyle": "line",
             "fillOpacity": 100,
             "gradientMode": "opacity",
-            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
             "insertNulls": false,
             "lineInterpolation": "smooth",
-            "lineStyle": { "fill": "solid" },
+            "lineStyle": {
+              "fill": "solid"
+            },
             "lineWidth": 1,
             "pointSize": 4,
-            "scaleDistribution": { "type": "linear" },
+            "scaleDistribution": {
+              "type": "linear"
+            },
             "showPoints": "always",
             "spanNulls": true,
-            "stacking": { "group": "A", "mode": "none" },
-            "thresholdsStyle": { "mode": "off" }
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [{ "color": "green" }, { "color": "red", "value": 80 }]
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
           },
           "unit": "reqps"
         },
         "overrides": []
       },
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
       "id": 2,
       "options": {
         "legend": {
@@ -156,15 +323,22 @@
           "placement": "bottom",
           "showLegend": true
         },
-        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "12.0.2",
       "targets": [
         {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "rate({\"http.server.duration_milliseconds_count\", job=\"broker\"}[5m])",
+          "editorMode": "code",
+          "expr": "sum(rate({\"http_server_duration_milliseconds_count\", exported_job=\"broker\"}[$__rate_interval]))",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "Requests",
@@ -177,10 +351,15 @@
       "type": "timeseries"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "axisBorderShow": false,
             "axisCenteredZero": false,
@@ -192,27 +371,51 @@
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
-            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
             "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
-            "scaleDistribution": { "type": "linear" },
+            "scaleDistribution": {
+              "type": "linear"
+            },
             "showPoints": "auto",
             "spanNulls": true,
-            "stacking": { "group": "A", "mode": "none" },
-            "thresholdsStyle": { "mode": "off" }
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [{ "color": "green" }, { "color": "red", "value": 80 }]
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
           },
           "unit": "ms"
         },
         "overrides": []
       },
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
       "id": 3,
       "options": {
         "legend": {
@@ -221,31 +424,44 @@
           "placement": "bottom",
           "showLegend": true
         },
-        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "12.0.2",
       "targets": [
         {
           "disableTextWrap": false,
-          "editorMode": "builder",
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "histogram_quantile(0.95, rate({\"http.server.duration_milliseconds_bucket\", job=~\"carrier-external-dhl|carrier-external-fedex|carrier-external-ups\"}[5m]))",
+          "expr": "histogram_quantile(\r\n  0.95,\r\n  sum by (exported_job, le) (\r\n    rate(http_server_duration_milliseconds_bucket{\r\n      exported_job=~\"carrier-external-(dhl|fedex|ups)\"\r\n    }[$__rate_interval])\r\n  )\r\n)",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "legendFormat": "{{job}}",
+          "legendFormat": "{{exported_job}}",
           "range": true,
           "refId": "A",
-          "useBackend": false
+          "useBackend": false,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          }
         }
       ],
       "title": "External Carrier API Latency [P95]",
       "type": "timeseries"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "axisBorderShow": false,
             "axisCenteredZero": false,
@@ -257,27 +473,51 @@
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
-            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
             "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
-            "scaleDistribution": { "type": "linear" },
+            "scaleDistribution": {
+              "type": "linear"
+            },
             "showPoints": "auto",
             "spanNulls": true,
-            "stacking": { "group": "A", "mode": "none" },
-            "thresholdsStyle": { "mode": "off" }
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [{ "color": "green" }, { "color": "red", "value": 80 }]
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
           },
           "unit": "ms"
         },
         "overrides": []
       },
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
       "id": 4,
       "options": {
         "legend": {
@@ -286,38 +526,63 @@
           "placement": "bottom",
           "showLegend": true
         },
-        "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "12.0.2",
       "targets": [
         {
           "disableTextWrap": false,
-          "editorMode": "builder",
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "histogram_quantile(0.5, rate({\"http.server.duration_milliseconds_bucket\", job=~\"carrier-external-dhl|carrier-external-fedex|carrier-external-ups\"}[5m]))",
+          "expr": "histogram_quantile(\r\n  0.5,\r\n  sum by (exported_job, le) (\r\n    rate(http_server_duration_milliseconds_bucket{\r\n      exported_job=~\"carrier-external-(dhl|fedex|ups)\"\r\n    }[$__rate_interval])\r\n  )\r\n)",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "legendFormat": "{{job}}",
+          "legendFormat": "{{exported_job}}",
           "range": true,
           "refId": "A",
-          "useBackend": false
+          "useBackend": false,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          }
         }
       ],
       "title": "External Carrier API Latency [P95]",
       "type": "timeseries"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
           "noValue": "0",
-          "thresholds": { "mode": "absolute", "steps": [{ "color": "green" }] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
         },
         "overrides": []
       },
-      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 16 },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 16
+      },
       "id": 5,
       "options": {
         "colorMode": "value",
@@ -338,31 +603,53 @@
       "targets": [
         {
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "increase(shipment_counter_total[5m])",
+          "editorMode": "code",
+          "expr": "sum(increase(shipment_counter_total{exported_job=\"broker\", status=\"received\"}[$__rate_interval]))",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "__auto",
           "range": true,
           "refId": "A",
-          "useBackend": false
+          "useBackend": false,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          }
         }
       ],
-      "title": "Total Shipments [5m]",
+      "title": "Total Shipments",
       "type": "stat"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
           "mappings": [],
           "noValue": "0",
-          "thresholds": { "mode": "absolute", "steps": [{ "color": "green" }] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
         },
         "overrides": []
       },
-      "gridPos": { "h": 8, "w": 16, "x": 8, "y": 16 },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 8,
+        "y": 16
+      },
       "id": 6,
       "options": {
         "displayMode": "gradient",
@@ -390,23 +677,34 @@
       "targets": [
         {
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "increase(shipment_carrier_counter_total[5m])",
+          "editorMode": "code",
+          "expr": "sum by (carrierCode) (\r\n  increase(shipment_carrier_counter_total[$__rate_interval])\r\n)",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "{{carrierCode}}",
           "range": true,
           "refId": "A",
-          "useBackend": false
+          "useBackend": false,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          }
         }
       ],
-      "title": "Carrier Distribution [5m]",
+      "title": "Carrier Distribution",
       "type": "bargauge"
     },
     {
-      "datasource": { "type": "jaeger", "uid": "bess2i6kr5wqob" },
-      "fieldConfig": { "defaults": {}, "overrides": [] },
-      "gridPos": { "h": 15, "w": 24, "x": 0, "y": 24 },
+      "datasource": {
+        "type": "tempo",
+        "uid": "${DS_TEMPO}"
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
       "id": 7,
       "options": {
         "edges": {},
@@ -417,31 +715,69 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
-          "datasource": { "type": "jaeger", "uid": "bess2i6kr5wqob" },
-          "queryType": "dependencyGraph",
-          "refId": "A"
+          "datasource": {
+            "type": "tempo",
+            "uid": "${DS_TEMPO}"
+          },
+          "filters": [
+            {
+              "id": "4e128009",
+              "operator": "=",
+              "scope": "span"
+            }
+          ],
+          "limit": 20,
+          "metricsQueryType": "range",
+          "queryType": "serviceMap",
+          "refId": "A",
+          "tableType": "traces"
         }
       ],
       "title": "Service Graph",
       "type": "nodeGraph"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "custom": {
-            "hideFrom": { "legend": false, "tooltip": false, "viz": false }
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
           },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [{ "color": "green" }] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
         },
         "overrides": []
       },
-      "gridPos": { "h": 26, "w": 12, "x": 0, "y": 39 },
+      "gridPos": {
+        "h": 26,
+        "w": 12,
+        "x": 0,
+        "y": 39
+      },
       "id": 8,
       "options": {
-        "basemap": { "config": {}, "name": "Layer 0", "type": "default" },
+        "basemap": {
+          "config": {},
+          "name": "Layer 0",
+          "type": "default"
+        },
         "controls": {
           "mouseWheelZoom": true,
           "showAttribution": true,
@@ -455,8 +791,10 @@
             "config": {
               "showLegend": true,
               "style": {
-                "color": { "fixed": "purple" },
-                "opacity": 0.1,
+                "color": {
+                  "fixed": "green"
+                },
+                "opacity": 0.8,
                 "rotation": {
                   "fixed": 0,
                   "max": 360,
@@ -473,7 +811,10 @@
                   "fixed": "img/icons/marker/circle.svg",
                   "mode": "fixed"
                 },
-                "symbolAlign": { "horizontal": "center", "vertical": "center" },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
                 "textConfig": {
                   "fontSize": 12,
                   "offsetX": 0,
@@ -483,14 +824,22 @@
                 }
               }
             },
-            "filterData": { "id": "byRefId", "options": "A" },
-            "location": { "lookup": "destinationCountry", "mode": "lookup" },
+            "filterData": {
+              "id": "byRefId",
+              "options": "A"
+            },
+            "location": {
+              "lookup": "destinationCountry",
+              "mode": "lookup"
+            },
             "name": "Shipment Distribution",
             "tooltip": true,
             "type": "markers"
           }
         ],
-        "tooltip": { "mode": "details" },
+        "tooltip": {
+          "mode": "details"
+        },
         "view": {
           "allLayers": true,
           "id": "coords",
@@ -503,20 +852,31 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "sum by(destinationCountry) (shipment_country_counter_total)",
+          "expr": "sum by (destinationCountry) (\r\n  increase(shipment_country_counter_total[$__rate_interval])\r\n)",
           "format": "table",
           "legendFormat": "__auto",
           "range": true,
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          }
         }
       ],
       "title": "Shipment Country Distribution",
       "type": "geomap"
     },
     {
-      "datasource": { "type": "loki", "uid": "fess2c2844d8gb" },
-      "fieldConfig": { "defaults": {}, "overrides": [] },
-      "gridPos": { "h": 13, "w": 12, "x": 12, "y": 39 },
+      "datasource": {
+        "type": "loki",
+        "uid": "${DS_LOKI}"
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 12,
+        "x": 12,
+        "y": 39
+      },
       "id": 9,
       "options": {
         "dedupStrategy": "none",
@@ -532,7 +892,10 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
-          "datasource": { "type": "loki", "uid": "fess2c2844d8gb" },
+          "datasource": {
+            "type": "loki",
+            "uid": "${DS_LOKI}"
+          },
           "direction": "backward",
           "editorMode": "builder",
           "expr": "{service_group=\"carrier\"} | detected_level = `error`",
@@ -544,9 +907,16 @@
       "type": "logs"
     },
     {
-      "datasource": { "type": "loki", "uid": "fess2c2844d8gb" },
-      "fieldConfig": { "defaults": {}, "overrides": [] },
-      "gridPos": { "h": 13, "w": 12, "x": 12, "y": 52 },
+      "datasource": {
+        "type": "loki",
+        "uid": "${DS_LOKI}"
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 12,
+        "x": 12,
+        "y": 52
+      },
       "id": 10,
       "options": {
         "dedupStrategy": "none",
@@ -562,7 +932,10 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
-          "datasource": { "type": "loki", "uid": "fess2c2844d8gb" },
+          "datasource": {
+            "type": "loki",
+            "uid": "${DS_LOKI}"
+          },
           "direction": "backward",
           "editorMode": "builder",
           "expr": "{service_group=\"carrier\"} | detected_level = `warn`",
@@ -574,15 +947,20 @@
       "type": "logs"
     }
   ],
-  "preload": false,
-  "refresh": "10s",
+  "refresh": "5s",
   "schemaVersion": 41,
   "tags": [],
-  "templating": { "list": [] },
-  "time": { "from": "now-5m", "to": "now" },
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
   "timepicker": {},
   "timezone": "browser",
   "title": "carrier",
-  "uid": "16b427b8-4f1f-4c14-8eaa-483104d338ed",
-  "version": 16
+  "uid": "16b427b8-4f1f-4c14-8eaa-483104d338ef",
+  "version": 10,
+  "weekStart": ""
 }

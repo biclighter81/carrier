@@ -55,7 +55,7 @@ tempo:
   tempo:
     metricsGenerator:
       enabled: true
-      remoteWriteUrl: "http://promstack-kube-prometheus-prometheus.monitoring:9090/api/v1/write"
+      remoteWriteUrl: "http://promstack-kube-prometheus-prometheus:9090/api/v1/write"
   tempoQuery:
     enabled: true
   persistence:
@@ -70,7 +70,7 @@ jaeger:
     enabled: true
     args:
       - "--memory.max-traces=5000"
-      - "--prometheus.server-url=http://promstack-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"
+      - "--prometheus.server-url=http://promstack-kube-prometheus-prometheus:9090"
       - "--prometheus.query.normalize-calls=true"
       - "--prometheus.query.normalize-duration=true"
     extraEnv:
@@ -109,6 +109,8 @@ opentelemetry-collector:
         endpoint: open-telemetry-tempo:4317
         tls:
           insecure: true
+      prometheus:
+        endpoint: "0.0.0.0:8889"
       # Create an exporter to Prometheus (metrics)
       otlphttp/prometheus:
         endpoint: http://promstack-kube-prometheus-prometheus:9090/api/v1/otlp
@@ -139,7 +141,7 @@ opentelemetry-collector:
         metrics:
           receivers: [otlp]
           processors: [resource, batch]
-          exporters: [otlphttp/prometheus]
+          exporters: [prometheus]
         logs:
           receivers: [otlp]
           processors: [resource, batch]
@@ -157,3 +159,53 @@ opentelemetry-collector:
                   otlp:
                     protocol: http/protobuf
                     endpoint: http://open-telemetry-opentelemetry-collector:4318
+  ports:
+    otlp:
+      enabled: true
+      containerPort: 4317
+      servicePort: 4317
+      hostPort: 4317
+      protocol: TCP
+      appProtocol: grpc
+    otlp-http:
+      enabled: true
+      containerPort: 4318
+      servicePort: 4318
+      hostPort: 4318
+      protocol: TCP
+    metrics-prom:
+      enabled: true
+      containerPort: 8889
+      servicePort: 8889
+      protocol: TCP
+    jaeger-compact:
+      enabled: true
+      containerPort: 6831
+      servicePort: 6831
+      hostPort: 6831
+      protocol: UDP
+    jaeger-thrift:
+      enabled: true
+      containerPort: 14268
+      servicePort: 14268
+      hostPort: 14268
+      protocol: TCP
+    jaeger-grpc:
+      enabled: true
+      containerPort: 14250
+      servicePort: 14250
+      hostPort: 14250
+      protocol: TCP
+    zipkin:
+      enabled: true
+      containerPort: 9411
+      servicePort: 9411
+      hostPort: 9411
+      protocol: TCP
+  serviceMonitor:
+    enabled: true
+    extraLabels:
+      release: promstack
+    metricsEndpoints:
+      - port: metrics-prom
+        interval: 5s
