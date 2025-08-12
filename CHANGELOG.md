@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/biclighter81/carrier/compare/v1.11.0...v1.12.0) (2025-08-12)
+
+
+### Features
+
+* Update dashboard configuration and feature flags; enhance locust scripts for improved performance ([3ca511b](https://github.com/biclighter81/carrier/commit/3ca511b0e2ad6f81c7bba485aa294b8ced50a38c))
+
 # [1.11.0](https://github.com/biclighter81/carrier/compare/v1.10.0...v1.11.0) (2025-07-23)
 
 
