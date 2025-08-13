@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/biclighter81/carrier/compare/v1.13.0...v1.14.0) (2025-08-13)
+
+
+### Features
+
+* Add port mapping configuration for control-plane in Cluster.yaml and implement forward script for service port forwarding ([d127a86](https://github.com/biclighter81/carrier/commit/d127a86f02b6cb065b93c7fc9fa9e4393d112632))
+
 # [1.13.0](https://github.com/biclighter81/carrier/compare/v1.12.0...v1.13.0) (2025-08-12)
 
 
