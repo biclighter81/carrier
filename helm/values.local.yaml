@@ -5,11 +5,11 @@ broker:
     tag: "latest"
   resources:
     limits:
-      cpu: "100m"
-      memory: "128Mi"
+      cpu: "1000m"
+      memory: "1Gi"
     requests:
-      cpu: "100m"
-      memory: "128Mi"
+      cpu: "1000m"
+      memory: "1Gi"
 wms:
   replicas: 1
   image:
@@ -17,11 +17,11 @@ wms:
     tag: "latest"
   resources:
     limits:
-      cpu: "100m"
-      memory: "128Mi"
+      cpu: "1000m"
+      memory: "1Gi"
     requests:
-      cpu: "100m"
-      memory: "128Mi"
+      cpu: "1000m"
+      memory: "1Gi"
 carriers:
   resources:
     limits:

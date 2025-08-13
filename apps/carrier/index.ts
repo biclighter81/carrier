@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
 import {
@@ -7,12 +7,12 @@ import {
   meter,
   flagClient,
   ValueType,
-} from 'instrumentation';
-import { Worker } from 'bullmq';
-import IORedis from 'ioredis';
-import { Shipment } from 'types';
+} from "instrumentation";
+import { Worker } from "bullmq";
+import IORedis from "ioredis";
+import { Shipment } from "types";
 
-const redis = new IORedis(process.env.REDIS_URL || 'redis://localhost:6379', {
+const redis = new IORedis(process.env.REDIS_URL || "redis://localhost:6379", {
   maxRetriesPerRequest: null,
 });
 
@@ -20,8 +20,8 @@ const carrierCode = process.env.CARRIER_CODE!;
 const carrierKey = carrierCode.toLowerCase(); // für Flags
 logger.info(`Bootstrapping ${carrierCode} worker...`);
 
-const shipmentCounter = meter.createCounter('shipments_processed', {
-  description: 'Counts the number of shipments processed',
+const shipmentCounter = meter.createCounter("shipments_processed", {
+  description: "Counts the number of shipments processed",
 });
 
 new Worker<Shipment>(
@@ -48,21 +48,21 @@ new Worker<Shipment>(
         ),
       ]);
     if (simulateUnavailable) {
-      logger.warn('External carrier will simulate unavailability');
+      logger.warn("External carrier will simulate unavailability");
     }
     if (simulateDelay) {
-      logger.warn('External carrier will simulate delay');
+      logger.warn("External carrier will simulate delay");
     }
     if (simulatePartialSuccess) {
-      logger.warn('External carrier will simulate partial success');
+      logger.warn("External carrier will simulate partial success");
     }
 
     // 📊 Telemetrie
     const externalCarrierResponseTime = meter.createHistogram(
-      'external.carrier.response_time',
+      "external.carrier.response_time",
       {
-        description: 'Disribution of external carrier API response times',
-        unit: 'ms',
+        description: "Disribution of external carrier API response times",
+        unit: "ms",
         valueType: ValueType.INT,
       }
     );
@@ -85,7 +85,7 @@ new Worker<Shipment>(
   },
   {
     connection: redis,
-    concurrency: 5,
+    concurrency: 20,
     telemetry: new BullMQOtel(process.env.SERVICE_NAME!),
   }
 );
@@ -95,7 +95,7 @@ logger.info(`📦 ${carrierCode} worker started!`);
 class ShipmentError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = 'ShipmentError';
+    this.name = "ShipmentError";
   }
 }
 
@@ -103,13 +103,13 @@ async function processShipment(shipment: Shipment) {
   const payload = transformToCarrierFormat(shipment);
   try {
     const res = await fetch(`${process.env.CARRIER_EXTERNAL_URL}/receive`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
 
     if (!res.ok) {
-      logger.error('Failed to process shipment', {
+      logger.error("Failed to process shipment", {
         status: res.status,
         statusText: res.statusText,
         response: await res.text(),
