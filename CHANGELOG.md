@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/biclighter81/carrier/compare/v1.12.0...v1.13.0) (2025-08-12)
+
+
+### Features
+
+* Update UPS delay feature flag default variant to 'off' ([02432ae](https://github.com/biclighter81/carrier/commit/02432aee7c2b6851b27de8ca7d82dee09a7bf949))
+
 # [1.12.0](https://github.com/biclighter81/carrier/compare/v1.11.0...v1.12.0) (2025-08-12)
 
 
