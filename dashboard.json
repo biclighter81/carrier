@@ -433,6 +433,10 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "disableTextWrap": false,
           "editorMode": "code",
           "exemplar": false,
@@ -442,11 +446,7 @@
           "legendFormat": "{{exported_job}}",
           "range": true,
           "refId": "A",
-          "useBackend": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "useBackend": false
         }
       ],
       "title": "External Carrier API Latency [P95]",
@@ -535,6 +535,10 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "disableTextWrap": false,
           "editorMode": "code",
           "exemplar": false,
@@ -544,11 +548,7 @@
           "legendFormat": "{{exported_job}}",
           "range": true,
           "refId": "A",
-          "useBackend": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "useBackend": false
         }
       ],
       "title": "External Carrier API Latency [P95]",
@@ -564,6 +564,7 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 0,
           "mappings": [],
           "noValue": "0",
           "thresholds": {
@@ -602,6 +603,10 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "disableTextWrap": false,
           "editorMode": "code",
           "expr": "sum(increase(shipment_counter_total{exported_job=\"broker\", status=\"received\"}[$__rate_interval]))",
@@ -610,11 +615,7 @@
           "legendFormat": "__auto",
           "range": true,
           "refId": "A",
-          "useBackend": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "useBackend": false
         }
       ],
       "title": "Total Shipments",
@@ -676,6 +677,10 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "disableTextWrap": false,
           "editorMode": "code",
           "expr": "sum by (carrierCode) (\r\n  increase(shipment_carrier_counter_total[$__rate_interval])\r\n)",
@@ -684,11 +689,7 @@
           "legendFormat": "{{carrierCode}}",
           "range": true,
           "refId": "A",
-          "useBackend": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "useBackend": false
         }
       ],
       "title": "Carrier Distribution",
@@ -753,6 +754,7 @@
               "viz": false
             }
           },
+          "decimals": 0,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -851,16 +853,16 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "sum by (destinationCountry) (\r\n  increase(shipment_country_counter_total[$__rate_interval])\r\n)",
           "format": "table",
           "legendFormat": "__auto",
           "range": true,
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "refId": "A"
         }
       ],
       "title": "Shipment Country Distribution",
@@ -961,6 +963,6 @@
   "timezone": "browser",
   "title": "carrier",
   "uid": "16b427b8-4f1f-4c14-8eaa-483104d338ef",
-  "version": 10,
+  "version": 4,
   "weekStart": ""
 }
