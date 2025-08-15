@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/biclighter81/carrier/compare/v1.14.0...v1.14.1) (2025-08-15)
+
+
+### Bug Fixes
+
+* Update datasource configuration for Prometheus in dashboard.json ([43e2561](https://github.com/biclighter81/carrier/commit/43e2561bf22db25aaab2514b1009b5d4499f03dc))
+
 # [1.14.0](https://github.com/biclighter81/carrier/compare/v1.13.0...v1.14.0) (2025-08-13)
 
 
